@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"unsafe"
 
-	"github.com/influxdata/influxdb/pkg/encoding/simple8b"
+	"github.com/blastbao/influxdb/pkg/encoding/simple8b"
 )
 
 // IntegerArrayEncodeAll encodes src into b, returning b and any error encountered.

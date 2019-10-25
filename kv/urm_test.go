@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kv"
-	influxdbtesting "github.com/influxdata/influxdb/testing"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kv"
+	influxdbtesting "github.com/blastbao/influxdb/testing"
 )
 
 func TestBoltUserResourceMappingService(t *testing.T) {

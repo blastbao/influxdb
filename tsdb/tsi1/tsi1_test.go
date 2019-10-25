@@ -9,9 +9,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/tsdb"
-	"github.com/influxdata/influxdb/tsdb/tsi1"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb/tsi1"
 )
 
 // Ensure iterator can operate over an in-memory list of elements.

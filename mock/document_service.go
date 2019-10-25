@@ -3,7 +3,7 @@ package mock
 import (
 	"context"
 
-	"github.com/influxdata/influxdb"
+	"github.com/blastbao/influxdb"
 )
 
 var _ influxdb.DocumentStore = &DocumentStore{}

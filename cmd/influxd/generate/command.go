@@ -6,10 +6,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/influxdata/influxdb/bolt"
-	"github.com/influxdata/influxdb/cmd/influxd/internal/profile"
-	"github.com/influxdata/influxdb/internal/fs"
-	"github.com/influxdata/influxdb/pkg/data/gen"
+	"github.com/blastbao/influxdb/bolt"
+	"github.com/blastbao/influxdb/cmd/influxd/internal/profile"
+	"github.com/blastbao/influxdb/internal/fs"
+	"github.com/blastbao/influxdb/pkg/data/gen"
 	"github.com/spf13/cobra"
 )
 

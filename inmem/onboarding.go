@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 const onboardingKey = "onboarding_key"

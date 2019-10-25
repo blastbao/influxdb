@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/inmem"
-	"github.com/influxdata/influxdb/storage"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/inmem"
+	"github.com/blastbao/influxdb/storage"
 )
 
 func TestBucketService(t *testing.T) {

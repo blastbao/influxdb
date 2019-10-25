@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"sort"
 
-	"github.com/influxdata/influxdb/models"
+	"github.com/blastbao/influxdb/models"
 )
 
 type TagsSequence interface {

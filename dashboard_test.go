@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	platform "github.com/influxdata/influxdb"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 func TestView_MarshalJSON(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 
 	"github.com/cespare/xxhash"
-	"github.com/influxdata/influxdb/pkg/bytesutil"
+	"github.com/blastbao/influxdb/pkg/bytesutil"
 )
 
 // numPartitions is the number of partitions we used in the ring's continuum. It

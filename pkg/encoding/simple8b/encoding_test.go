@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb/pkg/encoding/simple8b"
+	"github.com/blastbao/influxdb/pkg/encoding/simple8b"
 )
 
 func Test_Encode_NoValues(t *testing.T) {

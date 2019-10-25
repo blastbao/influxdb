@@ -9,8 +9,8 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/mock"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/mock"
 )
 
 const (

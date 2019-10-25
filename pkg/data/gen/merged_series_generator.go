@@ -4,7 +4,7 @@ import (
 	"container/heap"
 	"math"
 
-	"github.com/influxdata/influxdb/models"
+	"github.com/blastbao/influxdb/models"
 )
 
 type mergedSeriesGenerator struct {

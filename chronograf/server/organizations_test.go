@@ -11,9 +11,9 @@ import (
 	"testing"
 
 	"github.com/bouk/httprouter"
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/mocks"
-	"github.com/influxdata/influxdb/chronograf/roles"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/mocks"
+	"github.com/blastbao/influxdb/chronograf/roles"
 )
 
 func TestService_OrganizationID(t *testing.T) {

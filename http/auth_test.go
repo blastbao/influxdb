@@ -12,11 +12,11 @@ import (
 
 	"go.uber.org/zap"
 
-	platform "github.com/influxdata/influxdb"
-	pcontext "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/inmem"
-	"github.com/influxdata/influxdb/mock"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	pcontext "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/inmem"
+	"github.com/blastbao/influxdb/mock"
+	platformtesting "github.com/blastbao/influxdb/testing"
 	"github.com/julienschmidt/httprouter"
 )
 

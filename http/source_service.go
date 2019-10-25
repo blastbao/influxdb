@@ -11,9 +11,9 @@ import (
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/csv"
 	"github.com/influxdata/flux/lang"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/query"
-	"github.com/influxdata/influxdb/query/influxql"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/query"
+	"github.com/blastbao/influxdb/query/influxql"
 	"github.com/julienschmidt/httprouter"
 	"go.uber.org/zap"
 )

@@ -8,10 +8,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/mocks"
-	"github.com/influxdata/influxdb/chronograf/oauth2"
-	"github.com/influxdata/influxdb/chronograf/roles"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/mocks"
+	"github.com/blastbao/influxdb/chronograf/oauth2"
+	"github.com/blastbao/influxdb/chronograf/roles"
 )
 
 func TestAuthorizedToken(t *testing.T) {

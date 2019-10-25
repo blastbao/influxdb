@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/influxdata/influxdb/telegraf/plugins"
-	"github.com/influxdata/influxdb/telegraf/plugins/inputs"
-	"github.com/influxdata/influxdb/telegraf/plugins/outputs"
+	"github.com/blastbao/influxdb/telegraf/plugins"
+	"github.com/blastbao/influxdb/telegraf/plugins/inputs"
+	"github.com/blastbao/influxdb/telegraf/plugins/outputs"
 )
 
 // ErrTelegrafConfigInvalidOrganizationID is the error message for a missing or invalid organization ID.

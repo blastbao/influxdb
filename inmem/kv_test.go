@@ -6,9 +6,9 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/influxdata/influxdb/inmem"
-	"github.com/influxdata/influxdb/kv"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	"github.com/blastbao/influxdb/inmem"
+	"github.com/blastbao/influxdb/kv"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 func initKVStore(f platformtesting.KVStoreFields, t *testing.T) (kv.Store, func()) {

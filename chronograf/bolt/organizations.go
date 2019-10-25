@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	bolt "github.com/coreos/bbolt"
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/bolt/internal"
-	"github.com/influxdata/influxdb/chronograf/organizations"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/bolt/internal"
+	"github.com/blastbao/influxdb/chronograf/organizations"
 )
 
 // Ensure OrganizationsStore implements chronograf.OrganizationsStore.

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 type configLinks struct {

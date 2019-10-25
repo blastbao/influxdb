@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	"github.com/influxdata/flux/repl"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/http"
-	"github.com/influxdata/influxdb/query"
-	_ "github.com/influxdata/influxdb/query/builtin"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/http"
+	"github.com/blastbao/influxdb/query"
+	_ "github.com/blastbao/influxdb/query/builtin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

@@ -1,6 +1,6 @@
 package inputs
 
-import "github.com/influxdata/influxdb/telegraf/plugins"
+import "github.com/blastbao/influxdb/telegraf/plugins"
 
 type baseInput int
 

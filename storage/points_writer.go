@@ -3,7 +3,7 @@ package storage
 import (
 	"context"
 
-	"github.com/influxdata/influxdb/models"
+	"github.com/blastbao/influxdb/models"
 )
 
 // PointsWriter describes the ability to write points into a storage engine.

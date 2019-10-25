@@ -10,7 +10,7 @@ import (
 	"github.com/influxdata/flux/ast"
 	"github.com/influxdata/flux/ast/edit"
 	"github.com/influxdata/flux/parser"
-	"github.com/influxdata/influxdb/task/options"
+	"github.com/blastbao/influxdb/task/options"
 )
 
 const (

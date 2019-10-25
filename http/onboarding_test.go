@@ -5,12 +5,12 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/influxdata/influxdb/mock"
+	"github.com/blastbao/influxdb/mock"
 	"go.uber.org/zap"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/inmem"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/inmem"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 // NewMockSetupBackend returns a SetupBackend with mock services.

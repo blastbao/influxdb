@@ -5,8 +5,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/tracing"
 )
 
 var (
@@ -169,7 +169,7 @@ func (s *Service) findResourceLabels(ctx context.Context, tx Tx, filter influxdb
 		l, err := s.findLabelByID(ctx, tx, id)
 		if l == nil && err != nil {
 			// TODO(jm): return error instead of continuing once orphaned mappings are fixed
-			// (see https://github.com/influxdata/influxdb/issues/11278)
+			// (see https://github.com/blastbao/influxdb/issues/11278)
 			continue
 		}
 

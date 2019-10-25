@@ -7,10 +7,10 @@ import (
 	nethttp "net/http"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/cmd/influxd/launcher"
-	"github.com/influxdata/influxdb/http"
-	_ "github.com/influxdata/influxdb/query/builtin"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/cmd/influxd/launcher"
+	"github.com/blastbao/influxdb/http"
+	_ "github.com/blastbao/influxdb/query/builtin"
 )
 
 // Default context.

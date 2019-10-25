@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 const EFailedToGetStorageHost = "failed to get the storage host"

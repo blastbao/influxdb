@@ -8,10 +8,10 @@ import (
 	"time"
 
 	"github.com/google/go-cmp/cmp"
-	platform "github.com/influxdata/influxdb"
-	pcontext "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/task/backend"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	pcontext "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/task/backend"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 // MakeNewAuthorizationFunc is a function that creates a new authorization associated with a valid org and user.

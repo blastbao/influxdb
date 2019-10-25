@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/influxdata/flux"
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 	"github.com/pkg/errors"
 )
 

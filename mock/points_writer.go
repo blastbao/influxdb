@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/influxdata/influxdb/models"
+	"github.com/blastbao/influxdb/models"
 )
 
 // PointsWriter is a mock structure for writing points.

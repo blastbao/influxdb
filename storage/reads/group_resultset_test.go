@@ -6,10 +6,10 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/pkg/data/gen"
-	"github.com/influxdata/influxdb/storage/reads"
-	"github.com/influxdata/influxdb/storage/reads/datatypes"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/pkg/data/gen"
+	"github.com/blastbao/influxdb/storage/reads"
+	"github.com/blastbao/influxdb/storage/reads/datatypes"
 )
 
 func TestGroupGroupResultSetSorting(t *testing.T) {

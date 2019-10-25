@@ -11,13 +11,13 @@ import (
 	"github.com/influxdata/flux/execute"
 	"github.com/influxdata/flux/execute/executetest"
 	"github.com/influxdata/flux/semantic"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/mock"
-	"github.com/influxdata/influxdb/models"
-	_ "github.com/influxdata/influxdb/query/builtin"
-	"github.com/influxdata/influxdb/query/querytest"
-	"github.com/influxdata/influxdb/query/stdlib/influxdata/influxdb"
-	"github.com/influxdata/influxdb/tsdb"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/mock"
+	"github.com/blastbao/influxdb/models"
+	_ "github.com/blastbao/influxdb/query/builtin"
+	"github.com/blastbao/influxdb/query/querytest"
+	"github.com/blastbao/influxdb/query/stdlib/influxdata/influxdb"
+	"github.com/blastbao/influxdb/tsdb"
 )
 
 func TestTo_Query(t *testing.T) {

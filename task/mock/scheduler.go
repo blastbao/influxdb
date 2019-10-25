@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/influxdata/flux"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/task/backend"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/task/backend"
 	"go.uber.org/zap"
 )
 

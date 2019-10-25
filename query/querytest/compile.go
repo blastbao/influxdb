@@ -12,8 +12,8 @@ import (
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/semantic/semantictest"
 	"github.com/influxdata/flux/stdlib/universe"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/query"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/query"
 )
 
 type BucketAwareQueryTestCase struct {

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 func TestCorrectWidthHeight(t *testing.T) {

@@ -7,9 +7,9 @@ import (
 	"net/http"
 
 	"github.com/bouk/httprouter"
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/organizations"
-	"github.com/influxdata/influxdb/chronograf/roles"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/organizations"
+	"github.com/blastbao/influxdb/chronograf/roles"
 )
 
 type organizationRequest struct {

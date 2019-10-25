@@ -1,6 +1,6 @@
 package authorizer_test
 
-import "github.com/influxdata/influxdb"
+import "github.com/blastbao/influxdb"
 
 // Authorizer is mock authorizer that can be used in testing.
 type Authorizer struct {

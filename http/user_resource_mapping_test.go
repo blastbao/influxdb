@@ -12,8 +12,8 @@ import (
 
 	"go.uber.org/zap"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/mock"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/mock"
 	"github.com/julienschmidt/httprouter"
 )
 

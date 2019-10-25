@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	icontext "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/kit/tracing"
-	"github.com/influxdata/influxdb/task/backend"
-	"github.com/influxdata/influxdb/task/options"
+	platform "github.com/blastbao/influxdb"
+	icontext "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/task/backend"
+	"github.com/blastbao/influxdb/task/options"
 )
 
 type RunController interface {
@@ -138,7 +138,7 @@ func (p pAdapter) CreateTask(ctx context.Context, t platform.TaskCreate) (*platf
 		return nil, err
 	}
 
-	// TODO(mr): decide whether we allow user to configure scheduleAfter. https://github.com/influxdata/influxdb/issues/10884
+	// TODO(mr): decide whether we allow user to configure scheduleAfter. https://github.com/blastbao/influxdb/issues/10884
 	scheduleAfter := time.Now().Unix()
 
 	if t.Status == "" {

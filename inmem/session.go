@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 // RenewSession extends the expire time to newExpiration.

@@ -12,10 +12,10 @@ import (
 
 	"go.uber.org/zap"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/mock"
-	"github.com/influxdata/influxdb/telegraf/plugins/inputs"
-	"github.com/influxdata/influxdb/telegraf/plugins/outputs"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/mock"
+	"github.com/blastbao/influxdb/telegraf/plugins/inputs"
+	"github.com/blastbao/influxdb/telegraf/plugins/outputs"
 )
 
 // NewMockTelegrafBackend returns a TelegrafBackend with mock services.
@@ -850,7 +850,7 @@ func Test_newTelegrafResponses(t *testing.T) {
 }
 
 func Test_newTelegrafResponse(t *testing.T) {
-	t.Skip("https://github.com/influxdata/influxdb/issues/12457")
+	t.Skip("https://github.com/blastbao/influxdb/issues/12457")
 	type args struct {
 		tc *platform.TelegrafConfig
 	}

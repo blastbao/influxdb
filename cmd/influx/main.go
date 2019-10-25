@@ -7,12 +7,12 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/bolt"
-	"github.com/influxdata/influxdb/cmd/influx/internal"
-	"github.com/influxdata/influxdb/http"
-	"github.com/influxdata/influxdb/internal/fs"
-	"github.com/influxdata/influxdb/kv"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/bolt"
+	"github.com/blastbao/influxdb/cmd/influx/internal"
+	"github.com/blastbao/influxdb/http"
+	"github.com/blastbao/influxdb/internal/fs"
+	"github.com/blastbao/influxdb/kv"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

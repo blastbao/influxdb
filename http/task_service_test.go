@@ -13,13 +13,13 @@ import (
 	"testing"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	pcontext "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/inmem"
-	"github.com/influxdata/influxdb/mock"
-	_ "github.com/influxdata/influxdb/query/builtin"
-	"github.com/influxdata/influxdb/task/backend"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	pcontext "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/inmem"
+	"github.com/blastbao/influxdb/mock"
+	_ "github.com/blastbao/influxdb/query/builtin"
+	"github.com/blastbao/influxdb/task/backend"
+	platformtesting "github.com/blastbao/influxdb/testing"
 	"github.com/julienschmidt/httprouter"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zaptest"
@@ -1117,7 +1117,7 @@ func TestService_handlePostTaskLabel(t *testing.T) {
 }
 
 // Test that org name to org ID translation happens properly in the HTTP layer.
-// Regression test for https://github.com/influxdata/influxdb/issues/12089.
+// Regression test for https://github.com/blastbao/influxdb/issues/12089.
 func TestTaskHandler_CreateTaskWithOrgName(t *testing.T) {
 	i := inmem.NewService()
 	ctx := context.Background()

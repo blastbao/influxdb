@@ -8,9 +8,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/storage/wal"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/storage/wal"
+	"github.com/blastbao/influxdb/tsdb"
 	"github.com/influxdata/influxql"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"

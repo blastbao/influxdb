@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 // SecretService is a mock implementation of a retention.SecretService, which

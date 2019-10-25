@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/influxdata/flux/repl"
-	platform "github.com/influxdata/influxdb"
-	_ "github.com/influxdata/influxdb/query/builtin"
+	platform "github.com/blastbao/influxdb"
+	_ "github.com/blastbao/influxdb/query/builtin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

@@ -9,8 +9,8 @@ import (
 	"github.com/influxdata/flux/plan"
 	"github.com/influxdata/flux/stdlib/influxdata/influxdb"
 	"github.com/influxdata/flux/values"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/query"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/query"
 	"github.com/pkg/errors"
 )
 

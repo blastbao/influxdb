@@ -22,10 +22,10 @@ import (
 	"time"
 
 	bolt "github.com/coreos/bbolt"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/snowflake"
-	"github.com/influxdata/influxdb/task/backend"
-	"github.com/influxdata/influxdb/task/options"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/snowflake"
+	"github.com/blastbao/influxdb/task/backend"
+	"github.com/blastbao/influxdb/task/options"
 )
 
 // ErrDBReadOnly is an error for when the database is set to read only.

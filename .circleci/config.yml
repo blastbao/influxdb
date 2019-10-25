@@ -43,7 +43,7 @@ jobs:
     environment:
       GOCACHE: /tmp/go-cache
       GOFLAGS: '-mod=readonly -p=4' # Go on Circle thinks 32 CPUs are available, but there aren't.
-    working_directory: /go/src/github.com/influxdata/influxdb
+    working_directory: /go/src/github.com/blastbao/influxdb
     steps:
       - checkout
 
@@ -79,7 +79,7 @@ jobs:
   jstest:
     docker:
       - image: circleci/golang:1.11-node-browsers
-    working_directory: /go/src/github.com/influxdata/influxdb
+    working_directory: /go/src/github.com/blastbao/influxdb
     steps:
       - checkout
 
@@ -105,7 +105,7 @@ jobs:
     environment:
       GOCACHE: /tmp/go-cache
       GOFLAGS: '-mod=readonly -p=2' # Go on Circle thinks 32 CPUs are available, but there aren't.
-    working_directory: /go/src/github.com/influxdata/influxdb
+    working_directory: /go/src/github.com/blastbao/influxdb
     steps:
       - checkout
 
@@ -157,7 +157,7 @@ jobs:
     environment:
       GOCACHE: /tmp/go-cache
       GOFLAGS: '-mod=readonly -p=4' # Go on Circle thinks 32 CPUs are available, but there aren't.
-    working_directory: /go/src/github.com/influxdata/influxdb
+    working_directory: /go/src/github.com/blastbao/influxdb
     steps:
       - checkout
       - run: make checkcommit
@@ -192,7 +192,7 @@ jobs:
     environment:
       GOCACHE: /tmp/go-cache
       GOFLAGS: '-mod=readonly -p=4' # Go on Circle thinks 32 CPUs are available, but there aren't.
-    working_directory: /go/src/github.com/influxdata/influxdb
+    working_directory: /go/src/github.com/blastbao/influxdb
     steps:
       - checkout
 
@@ -229,7 +229,7 @@ jobs:
       GOCACHE: /tmp/go-cache
       GOFLAGS: '-mod=readonly -p=4' # Go on Circle thinks 32 CPUs are available, but there aren't.
       DOCKER_VERSION: 2.0.0-alpha
-    working_directory: /go/src/github.com/influxdata/influxdb
+    working_directory: /go/src/github.com/blastbao/influxdb
     steps:
       - checkout
 

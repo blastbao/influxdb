@@ -10,8 +10,8 @@ import (
 	"github.com/influxdata/flux/execute"
 	"github.com/influxdata/flux/memory"
 	"github.com/influxdata/flux/semantic"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/tsdb/cursors"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/tsdb/cursors"
 	"github.com/pkg/errors"
 )
 

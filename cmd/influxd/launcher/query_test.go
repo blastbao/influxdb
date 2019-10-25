@@ -12,9 +12,9 @@ import (
 
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/lang"
-	"github.com/influxdata/influxdb/cmd/influxd/launcher"
-	phttp "github.com/influxdata/influxdb/http"
-	"github.com/influxdata/influxdb/query"
+	"github.com/blastbao/influxdb/cmd/influxd/launcher"
+	phttp "github.com/blastbao/influxdb/http"
+	"github.com/blastbao/influxdb/query"
 )
 
 func TestPipeline_Write_Query_FieldKey(t *testing.T) {

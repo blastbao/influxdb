@@ -8,8 +8,8 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kv"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kv"
 )
 
 // NewDocumentIntegrationTest will test the documents related funcs.

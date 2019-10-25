@@ -3,7 +3,7 @@ package tsm1
 import (
 	"sync"
 
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb"
 	"github.com/influxdata/influxql"
 )
 

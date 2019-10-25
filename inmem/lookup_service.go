@@ -3,7 +3,7 @@ package inmem
 import (
 	"context"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 var _ platform.LookupService = (*Service)(nil)

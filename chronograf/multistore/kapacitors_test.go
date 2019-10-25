@@ -3,7 +3,7 @@ package multistore
 import (
 	"testing"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 func TestInterfaceImplementation(t *testing.T) {

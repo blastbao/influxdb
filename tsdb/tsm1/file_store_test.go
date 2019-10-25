@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influxdb/logger"
-	"github.com/influxdata/influxdb/tsdb/tsm1"
+	"github.com/blastbao/influxdb/logger"
+	"github.com/blastbao/influxdb/tsdb/tsm1"
 )
 
 func TestFileStore_Read(t *testing.T) {

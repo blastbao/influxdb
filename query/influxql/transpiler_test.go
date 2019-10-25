@@ -5,11 +5,11 @@ import (
 	"strings"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/mock"
-	"github.com/influxdata/influxdb/query/influxql"
-	"github.com/influxdata/influxdb/query/influxql/spectests"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/mock"
+	"github.com/blastbao/influxdb/query/influxql"
+	"github.com/blastbao/influxdb/query/influxql/spectests"
+	platformtesting "github.com/blastbao/influxdb/testing"
 	"github.com/pkg/errors"
 )
 
@@ -193,7 +193,7 @@ func TestTranspiler_Compile(t *testing.T) {
 		{s: `SELECT bottom(value, 2.5) FROM cpu`, err: `expected integer as last argument in bottom(), found 2.500`},
 		{s: `SELECT bottom(value, -1) FROM cpu`, err: `limit (-1) in bottom function must be at least 1`},
 		{s: `SELECT bottom(value, 3) FROM cpu LIMIT 2`, err: `limit (3) in bottom function can not be larger than the LIMIT (2) in the select statement`},
-		// TODO(jsternberg): This query is wrong, but we cannot enforce this because of previous behavior: https://github.com/influxdata/influxdb/pull/8771
+		// TODO(jsternberg): This query is wrong, but we cannot enforce this because of previous behavior: https://github.com/blastbao/influxdb/pull/8771
 		//{s: `SELECT value FROM cpu WHERE time >= now() - 10m OR time < now() - 5m`, err: `cannot use OR with time conditions`},
 		{s: `SELECT value FROM cpu WHERE value`, err: `invalid condition expression: value`},
 		{s: `SELECT count(value), * FROM cpu`, err: `mixing aggregate and non-aggregate queries is not supported`},
@@ -350,10 +350,10 @@ func TestTranspiler_Compile(t *testing.T) {
 		{s: `SELECT holt_winters_with_fit(min(value), 10, 'string') FROM myseries where time < now() and time > now() - 1d GROUP BY time(1d)`, err: `expected integer argument as third arg in holt_winters_with_fit`},
 		{s: `SELECT holt_winters_with_fit(min(value), 10, -1) FROM myseries where time < now() and time > now() - 1d GROUP BY time(1d)`, err: `third arg to holt_winters_with_fit cannot be negative, got -1`},
 		{s: `SELECT mean(value) + value FROM cpu WHERE time < now() and time > now() - 1h GROUP BY time(10m)`, err: `mixing aggregate and non-aggregate queries is not supported`},
-		// TODO: Remove this restriction in the future: https://github.com/influxdata/influxdb/issues/5968
+		// TODO: Remove this restriction in the future: https://github.com/blastbao/influxdb/issues/5968
 		{s: `SELECT mean(cpu_total - cpu_idle) FROM cpu`, err: `expected field argument in mean()`},
 		{s: `SELECT derivative(mean(cpu_total - cpu_idle), 1s) FROM cpu WHERE time < now() AND time > now() - 1d GROUP BY time(1h)`, err: `expected field argument in mean()`},
-		// TODO: The error message will change when math is allowed inside an aggregate: https://github.com/influxdata/influxdb/pull/5990#issuecomment-195565870
+		// TODO: The error message will change when math is allowed inside an aggregate: https://github.com/blastbao/influxdb/pull/5990#issuecomment-195565870
 		{s: `SELECT count(foo + sum(bar)) FROM cpu`, err: `expected field argument in count()`},
 		{s: `SELECT (count(foo + sum(bar))) FROM cpu`, err: `expected field argument in count()`},
 		{s: `SELECT sum(value) + count(foo + sum(bar)) FROM cpu`, err: `expected field argument in count()`},

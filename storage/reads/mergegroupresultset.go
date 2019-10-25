@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"sort"
 
-	"github.com/influxdata/influxdb/pkg/slices"
+	"github.com/blastbao/influxdb/pkg/slices"
 )
 
 // groupNoneMergedGroupResultSet produces a single GroupCursor, merging all

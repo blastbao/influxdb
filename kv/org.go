@@ -8,9 +8,9 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/influxdata/influxdb"
-	icontext "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb"
+	icontext "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/kit/tracing"
 )
 
 var (

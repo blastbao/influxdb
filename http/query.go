@@ -18,8 +18,8 @@ import (
 	"github.com/influxdata/flux/csv"
 	"github.com/influxdata/flux/lang"
 	"github.com/influxdata/flux/parser"
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/query"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/query"
 	"github.com/influxdata/influxql"
 )
 

@@ -3,7 +3,7 @@ package mock
 import (
 	"context"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 var _ platform.TelegrafConfigStore = &TelegrafConfigStore{}

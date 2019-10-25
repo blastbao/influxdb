@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/tracing"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/tracing"
 )
 
 // BucketService connects to Influx via HTTP using tokens to manage buckets

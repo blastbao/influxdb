@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb/storage/reads"
-	"github.com/influxdata/influxdb/storage/reads/datatypes"
+	"github.com/blastbao/influxdb/storage/reads"
+	"github.com/blastbao/influxdb/storage/reads/datatypes"
 )
 
 func newGroupNoneStreamSeries(tagKeys string, v ...string) *sliceStreamReader {

@@ -2,7 +2,7 @@ package query
 
 import (
 	"github.com/influxdata/flux"
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 // BucketAwareOperationSpec specifies an operation that reads or writes buckets

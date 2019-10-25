@@ -6,9 +6,9 @@ import (
 	"io"
 	"strings"
 
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/storage/reads"
-	"github.com/influxdata/influxdb/tsdb/cursors"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/storage/reads"
+	"github.com/blastbao/influxdb/tsdb/cursors"
 )
 
 func CursorToString(wr io.Writer, cur cursors.Cursor, opts ...optionFn) {

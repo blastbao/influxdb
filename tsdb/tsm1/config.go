@@ -4,7 +4,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/influxdata/influxdb/toml"
+	"github.com/blastbao/influxdb/toml"
 )
 
 var DefaultMaxConcurrentOpens = runtime.GOMAXPROCS(0)

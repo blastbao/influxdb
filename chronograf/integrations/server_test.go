@@ -15,10 +15,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/bolt"
-	"github.com/influxdata/influxdb/chronograf/oauth2"
-	"github.com/influxdata/influxdb/chronograf/server"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/bolt"
+	"github.com/blastbao/influxdb/chronograf/oauth2"
+	"github.com/blastbao/influxdb/chronograf/server"
 )
 
 func TestServer(t *testing.T) {
@@ -1647,7 +1647,7 @@ func TestServer(t *testing.T) {
 		//				body: `
 		//{
 		//  "code": 401,
-		//  "message": "user does not have authorization required to set SuperAdmin status. See https://github.com/influxdata/influxdb/chronograf/issues/2601 for more information."
+		//  "message": "user does not have authorization required to set SuperAdmin status. See https://github.com/blastbao/influxdb/chronograf/issues/2601 for more information."
 		//}`,
 		//			},
 		//		},

@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/tsdb"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/tsdb"
 )
 
 const (

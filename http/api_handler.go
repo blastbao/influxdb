@@ -4,11 +4,11 @@ import (
 	http "net/http"
 	"strings"
 
-	influxdb "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/authorizer"
-	"github.com/influxdata/influxdb/chronograf/server"
-	"github.com/influxdata/influxdb/query"
-	"github.com/influxdata/influxdb/storage"
+	influxdb "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/authorizer"
+	"github.com/blastbao/influxdb/chronograf/server"
+	"github.com/blastbao/influxdb/query"
+	"github.com/blastbao/influxdb/storage"
 	"go.uber.org/zap"
 )
 

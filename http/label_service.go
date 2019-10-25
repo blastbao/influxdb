@@ -10,7 +10,7 @@ import (
 
 	"go.uber.org/zap"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 	"github.com/julienschmidt/httprouter"
 )
 

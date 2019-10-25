@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 	"github.com/julienschmidt/httprouter"
 	"go.uber.org/zap"
 )

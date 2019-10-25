@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/prom/promtest"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/prom/promtest"
+	"github.com/blastbao/influxdb/tsdb"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

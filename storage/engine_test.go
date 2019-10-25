@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/storage"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/storage"
+	"github.com/blastbao/influxdb/tsdb"
 )
 
 func TestEngine_WriteAndIndex(t *testing.T) {

@@ -3,7 +3,7 @@ package gather
 import (
 	"context"
 
-	"github.com/influxdata/influxdb"
+	"github.com/blastbao/influxdb"
 )
 
 // Scraper gathers metrics from a scraper target.

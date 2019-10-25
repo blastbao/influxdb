@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 var (

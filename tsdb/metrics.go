@@ -4,7 +4,7 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/influxdata/influxdb/pkg/rhh"
+	"github.com/blastbao/influxdb/pkg/rhh"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

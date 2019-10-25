@@ -12,9 +12,9 @@ import (
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/lang"
 	"github.com/influxdata/flux/semantic"
-	platform "github.com/influxdata/influxdb"
-	pctx "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/query"
+	platform "github.com/blastbao/influxdb"
+	pctx "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/query"
 )
 
 type QueryLogReader struct {

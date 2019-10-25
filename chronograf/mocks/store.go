@@ -3,7 +3,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 // Store is a server.DataStore

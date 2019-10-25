@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb"
 )
 
 func newSeriesIDSet(ids ...int) *tsdb.SeriesIDSet {

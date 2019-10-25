@@ -4,7 +4,7 @@ import (
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/querytest"
 	"github.com/influxdata/flux/stdlib/influxdata/influxdb/v1"
-	"github.com/influxdata/influxdb/query/stdlib/influxdata/influxdb"
+	"github.com/blastbao/influxdb/query/stdlib/influxdata/influxdb"
 )
 
 // FromInfluxJSONCompiler returns a compiler that replaces all From operations with FromJSON.

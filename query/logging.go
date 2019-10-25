@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/influxdata/flux"
-	"github.com/influxdata/influxdb/kit/check"
-	"github.com/influxdata/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/kit/check"
+	"github.com/blastbao/influxdb/kit/tracing"
 )
 
 // LoggingServiceBridge implements ProxyQueryService and logs the queries while consuming a QueryService interface.

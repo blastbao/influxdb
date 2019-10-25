@@ -7,11 +7,11 @@ import (
 	"os"
 	"strings"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/http"
-	"github.com/influxdata/influxdb/kit/signals"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/write"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/http"
+	"github.com/blastbao/influxdb/kit/signals"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/write"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

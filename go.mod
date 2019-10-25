@@ -1,4 +1,4 @@
-module github.com/influxdata/influxdb
+module github.com/blastbao/influxdb
 
 require (
 	github.com/BurntSushi/toml v0.3.1

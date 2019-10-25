@@ -6,9 +6,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/internal/fs"
-	"github.com/influxdata/influxdb/tsdb/tsm1"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/internal/fs"
+	"github.com/blastbao/influxdb/tsdb/tsm1"
 	"github.com/spf13/cobra"
 )
 

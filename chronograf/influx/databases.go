@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/kit/tracing"
 )
 
 // AllDB returns all databases from within Influx

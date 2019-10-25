@@ -6,8 +6,8 @@ import (
 	"sync"
 
 	"github.com/influxdata/flux"
-	"github.com/influxdata/influxdb/kit/check"
-	"github.com/influxdata/influxdb/query"
+	"github.com/blastbao/influxdb/kit/check"
+	"github.com/blastbao/influxdb/query"
 )
 
 // ProxyQueryService mocks the idep QueryService for testing.

@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/mock"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/mock"
 )
 
 func Test_queryOrganization(t *testing.T) {

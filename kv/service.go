@@ -6,9 +6,9 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/rand"
-	"github.com/influxdata/influxdb/snowflake"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/rand"
+	"github.com/blastbao/influxdb/snowflake"
 )
 
 var (

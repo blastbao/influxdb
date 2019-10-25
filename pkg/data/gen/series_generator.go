@@ -4,7 +4,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/influxdata/influxdb/models"
+	"github.com/blastbao/influxdb/models"
 )
 
 type SeriesGenerator interface {

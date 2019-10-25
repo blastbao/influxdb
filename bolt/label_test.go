@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/bolt"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/bolt"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 func initLabelService(f platformtesting.LabelFields, t *testing.T) (platform.LabelService, string, func()) {

@@ -11,8 +11,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"go.uber.org/zap"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/tracing"
 )
 
 // OrgBackend is all services and associated parameters required to construct

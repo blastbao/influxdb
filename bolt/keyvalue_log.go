@@ -11,8 +11,8 @@ import (
 
 	"github.com/coreos/bbolt"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/tracing"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/tracing"
 )
 
 var (

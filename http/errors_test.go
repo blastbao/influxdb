@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/http"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/http"
 )
 
 func TestEncodeError(t *testing.T) {

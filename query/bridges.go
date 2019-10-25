@@ -6,9 +6,9 @@ import (
 
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/csv"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/check"
-	"github.com/influxdata/influxdb/kit/tracing"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/check"
+	"github.com/blastbao/influxdb/kit/tracing"
 )
 
 // QueryServiceBridge implements the QueryService interface while consuming the AsyncQueryService interface.

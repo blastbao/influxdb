@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 // Ensure an ServerStore can store, retrieve, update, and delete servers.

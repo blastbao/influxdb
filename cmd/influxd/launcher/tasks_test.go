@@ -12,10 +12,10 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/execute/executetest"
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/cmd/influxd/launcher"
-	pctx "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/task/backend"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/cmd/influxd/launcher"
+	pctx "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/task/backend"
 )
 
 func TestLauncher_Task(t *testing.T) {

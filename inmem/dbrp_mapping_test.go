@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 func initDBRPMappingService(f platformtesting.DBRPMappingFields, t *testing.T) (platform.DBRPMappingService, func()) {

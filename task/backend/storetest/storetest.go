@@ -9,10 +9,10 @@ import (
 	"time"
 
 	"github.com/google/go-cmp/cmp"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/snowflake"
-	"github.com/influxdata/influxdb/task/backend"
-	"github.com/influxdata/influxdb/task/options"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/snowflake"
+	"github.com/blastbao/influxdb/task/backend"
+	"github.com/blastbao/influxdb/task/options"
 )
 
 var idGen = snowflake.NewIDGenerator()

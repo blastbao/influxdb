@@ -3,8 +3,8 @@ package tsdb
 import (
 	"encoding/binary"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/models"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/models"
 )
 
 
@@ -12,10 +12,13 @@ import (
 // 反序列化
 // DecodeName converts tsdb internal serialization back to organization and bucket IDs.
 func DecodeName(name [16]byte) (org, bucket platform.ID) {
+
 	// name[0:8] => uint64 => org
 	org = platform.ID(binary.BigEndian.Uint64(name[0:8]))
+
 	// name[8:16] => uint64 => bucket
 	bucket = platform.ID(binary.BigEndian.Uint64(name[8:16]))
+
 	return
 }
 
@@ -49,10 +52,13 @@ func ExplodePoints(org, bucket platform.ID, points []models.Point) ([]models.Poi
 	ob := EncodeName(org, bucket)
 	name := string(ob[:])
 
+
+
 	tags := make(models.Tags, 1)
 
 	//2.
 	for _, pt := range points {
+
 
 		tags = tags[:1] // reset buffer for next point.
 
@@ -64,19 +70,22 @@ func ExplodePoints(org, bucket platform.ID, points []models.Point) ([]models.Poi
 
 		// 时间戳
 		t := pt.Time()
+
 		// 字段成员迭代器
 		itr := pt.FieldIterator()
 
 
 		tags = append(tags, models.Tag{}) // Make room for field key and value.
 
-		// 遍历字段
+		// 遍历字段成员
 		for itr.Next() {
 
 			tags[len(tags)-1] = models.NewTag(models.FieldKeyTagKeyBytes, itr.FieldKey())
 
+
 			var err error
 			field := make(models.Fields, 1)
+
 			switch itr.Type() {
 			case models.Float:
 				field[string(itr.FieldKey())], err = itr.FloatValue()
@@ -89,6 +98,7 @@ func ExplodePoints(org, bucket platform.ID, points []models.Point) ([]models.Poi
 			case models.Unsigned:
 				field[string(itr.FieldKey())], err = itr.UnsignedValue()
 			}
+
 			if err != nil {
 				return nil, err
 			}

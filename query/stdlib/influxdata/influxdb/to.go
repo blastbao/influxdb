@@ -16,10 +16,10 @@ import (
 	"github.com/influxdata/flux/stdlib/influxdata/influxdb"
 	"github.com/influxdata/flux/stdlib/kafka"
 	"github.com/influxdata/flux/values"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/storage"
-	"github.com/influxdata/influxdb/tsdb"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/storage"
+	"github.com/blastbao/influxdb/tsdb"
 )
 
 // ToKind is the kind for the `to` flux function

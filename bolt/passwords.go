@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	bolt "github.com/coreos/bbolt"
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 	"golang.org/x/crypto/bcrypt"
 )
 

@@ -6,11 +6,11 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/authorizer"
-	influxdbcontext "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/mock"
-	influxdbtesting "github.com/influxdata/influxdb/testing"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/authorizer"
+	influxdbcontext "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/mock"
+	influxdbtesting "github.com/blastbao/influxdb/testing"
 )
 
 var secretCmpOptions = cmp.Options{

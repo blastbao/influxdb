@@ -15,12 +15,12 @@ import (
 	"time"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb"
-	icontext "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/inmem"
-	"github.com/influxdata/influxdb/task"
-	"github.com/influxdata/influxdb/task/backend"
-	"github.com/influxdata/influxdb/task/options"
+	"github.com/blastbao/influxdb"
+	icontext "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/inmem"
+	"github.com/blastbao/influxdb/task"
+	"github.com/blastbao/influxdb/task/backend"
+	"github.com/blastbao/influxdb/task/options"
 )
 
 func init() {
@@ -304,7 +304,7 @@ func testTaskCRUD(t *testing.T, sys *System) {
 	}
 
 	// Update task: use a new token on the context and modify some other option.
-	// Ensure the authorization doesn't change -- it did change at one time, which was bug https://github.com/influxdata/influxdb/issues/12218.
+	// Ensure the authorization doesn't change -- it did change at one time, which was bug https://github.com/blastbao/influxdb/issues/12218.
 	newAuthz := &influxdb.Authorization{OrgID: cr.OrgID, UserID: cr.UserID, Permissions: influxdb.OperPermissions()}
 	if err := sys.I.CreateAuthorization(sys.Ctx, newAuthz); err != nil {
 		t.Fatal(err)

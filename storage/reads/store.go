@@ -4,10 +4,10 @@ import (
 	"context"
 
 	"github.com/gogo/protobuf/proto"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/query/stdlib/influxdata/influxdb"
-	"github.com/influxdata/influxdb/storage/reads/datatypes"
-	"github.com/influxdata/influxdb/tsdb/cursors"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/query/stdlib/influxdata/influxdb"
+	"github.com/blastbao/influxdb/storage/reads/datatypes"
+	"github.com/blastbao/influxdb/tsdb/cursors"
 )
 
 type ResultSet interface {

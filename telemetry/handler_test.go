@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/gogo/protobuf/proto"
-	pr "github.com/influxdata/influxdb/prometheus"
+	pr "github.com/blastbao/influxdb/prometheus"
 	dto "github.com/prometheus/client_model/go"
 	"github.com/prometheus/common/expfmt"
 	"go.uber.org/zap/zaptest"

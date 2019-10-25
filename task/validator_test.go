@@ -5,12 +5,12 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/influxdata/influxdb"
-	pctx "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/http"
-	"github.com/influxdata/influxdb/inmem"
-	"github.com/influxdata/influxdb/mock"
-	"github.com/influxdata/influxdb/task"
+	"github.com/blastbao/influxdb"
+	pctx "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/http"
+	"github.com/blastbao/influxdb/inmem"
+	"github.com/blastbao/influxdb/mock"
+	"github.com/blastbao/influxdb/task"
 	"go.uber.org/zap/zaptest"
 )
 

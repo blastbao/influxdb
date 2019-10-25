@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 
 	bolt "github.com/coreos/bbolt"
-	influxdb "github.com/influxdata/influxdb"
+	influxdb "github.com/blastbao/influxdb"
 )
 
 var (
@@ -163,7 +163,7 @@ func (c *Client) FindResourceLabels(ctx context.Context, filter influxdb.LabelMa
 			l, err := c.findLabelByID(ctx, tx, id)
 			if l == nil && err != nil {
 				// TODO(jm): return error instead of continuing once orphaned mappings are fixed
-				// (see https://github.com/influxdata/influxdb/issues/11278)
+				// (see https://github.com/blastbao/influxdb/issues/11278)
 				continue
 			}
 

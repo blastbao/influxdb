@@ -5,9 +5,9 @@ import (
 	"math"
 	"sync"
 
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/pkg/bytesutil"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/pkg/bytesutil"
+	"github.com/blastbao/influxdb/tsdb"
 	"github.com/influxdata/influxql"
 )
 

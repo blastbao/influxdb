@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/hashicorp/vault/api"
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 var _ platform.SecretService = (*SecretService)(nil)

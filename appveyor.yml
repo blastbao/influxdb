@@ -29,5 +29,5 @@ build: false
 deploy: false
 
 test_script:
-  - echo "Appveyor needs to be re-enabled. See https://github.com/influxdata/influxdb/issues/10937"
+  - echo "Appveyor needs to be re-enabled. See https://github.com/blastbao/influxdb/issues/10937"
   # - go test -timeout 15m -v ./...

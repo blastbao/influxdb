@@ -10,7 +10,7 @@ import (
 	"github.com/influxdata/flux/ast"
 	"github.com/influxdata/flux/semantic"
 	"github.com/influxdata/flux/stdlib/universe"
-	"github.com/influxdata/influxdb/query/stdlib/influxdata/influxdb"
+	"github.com/blastbao/influxdb/query/stdlib/influxdata/influxdb"
 )
 
 type ArgKind int

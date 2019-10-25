@@ -151,7 +151,7 @@ export interface FluxLinks {
 }
 
 // FluxTable is the result of a request to Flux
-// https://github.com/influxdata/influxdb/blob/master/query/docs/SPEC.md#response-format
+// https://github.com/blastbao/influxdb/blob/master/query/docs/SPEC.md#response-format
 export interface FluxTable {
   id: string
   name: string

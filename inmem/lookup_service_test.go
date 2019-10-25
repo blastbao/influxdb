@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/mock"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/mock"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 var (

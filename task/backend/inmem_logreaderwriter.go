@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 // orgtask is used as a key for storing runs by org and task ID.

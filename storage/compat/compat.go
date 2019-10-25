@@ -8,9 +8,9 @@
 package compat
 
 import (
-	"github.com/influxdata/influxdb/storage"
-	"github.com/influxdata/influxdb/toml"
-	"github.com/influxdata/influxdb/tsdb/tsm1"
+	"github.com/blastbao/influxdb/storage"
+	"github.com/blastbao/influxdb/toml"
+	"github.com/blastbao/influxdb/tsdb/tsm1"
 )
 
 // Config matches the old toml layout from the influxdb repo, so that we can read

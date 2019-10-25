@@ -5,7 +5,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/influxdata/influxdb/pkg/data/gen"
+	"github.com/blastbao/influxdb/pkg/data/gen"
 	"github.com/spf13/cobra"
 )
 

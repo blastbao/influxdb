@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 	"github.com/julienschmidt/httprouter"
 )
 

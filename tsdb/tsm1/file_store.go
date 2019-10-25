@@ -17,12 +17,12 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/influxdata/influxdb/kit/tracing"
-	"github.com/influxdata/influxdb/pkg/file"
-	"github.com/influxdata/influxdb/pkg/limiter"
-	"github.com/influxdata/influxdb/pkg/metrics"
-	"github.com/influxdata/influxdb/query"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/pkg/file"
+	"github.com/blastbao/influxdb/pkg/limiter"
+	"github.com/blastbao/influxdb/pkg/metrics"
+	"github.com/blastbao/influxdb/query"
+	"github.com/blastbao/influxdb/tsdb"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"
 )

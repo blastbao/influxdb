@@ -11,12 +11,12 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	platcontext "github.com/influxdata/influxdb/context"
-	httpMock "github.com/influxdata/influxdb/http/mock"
-	"github.com/influxdata/influxdb/inmem"
-	"github.com/influxdata/influxdb/mock"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	platcontext "github.com/blastbao/influxdb/context"
+	httpMock "github.com/blastbao/influxdb/http/mock"
+	"github.com/blastbao/influxdb/inmem"
+	"github.com/blastbao/influxdb/mock"
+	platformtesting "github.com/blastbao/influxdb/testing"
 	"github.com/julienschmidt/httprouter"
 )
 

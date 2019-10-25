@@ -5,8 +5,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/influxdata/influxdb/pkg/data/gen"
-	"github.com/influxdata/influxdb/tsdb/tsm1"
+	"github.com/blastbao/influxdb/pkg/data/gen"
+	"github.com/blastbao/influxdb/tsdb/tsm1"
 )
 
 const (

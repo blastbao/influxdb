@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/influxdata/influxdb"
+	"github.com/blastbao/influxdb"
 )
 
 // ErrInvalidDuration is returned when parsing a malformatted duration.

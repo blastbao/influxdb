@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 func TestRoles_ToChronograf(t *testing.T) {

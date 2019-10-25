@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/snowflake"
-	"github.com/influxdata/influxdb/task/backend"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/snowflake"
+	"github.com/blastbao/influxdb/task/backend"
 	cron "gopkg.in/robfig/cron.v2"
 )
 

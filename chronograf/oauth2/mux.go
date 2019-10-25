@@ -5,7 +5,7 @@ import (
 	"path"
 	"time"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 	"golang.org/x/oauth2"
 )
 

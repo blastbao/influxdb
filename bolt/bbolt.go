@@ -8,9 +8,9 @@ import (
 	"time"
 
 	bolt "github.com/coreos/bbolt"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/rand"
-	"github.com/influxdata/influxdb/snowflake"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/rand"
+	"github.com/blastbao/influxdb/snowflake"
 	"go.uber.org/zap"
 )
 

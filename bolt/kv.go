@@ -10,8 +10,8 @@ import (
 	"github.com/coreos/bbolt"
 	"go.uber.org/zap"
 
-	"github.com/influxdata/influxdb/kit/tracing"
-	"github.com/influxdata/influxdb/kv"
+	"github.com/blastbao/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/kv"
 )
 
 // KVStore is a kv.Store backed by boltdb.

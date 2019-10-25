@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/influxdata/flux"
-	platform "github.com/influxdata/influxdb"
-	platcontext "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/kit/tracing"
-	"github.com/influxdata/influxdb/query"
+	platform "github.com/blastbao/influxdb"
+	platcontext "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/query"
 	"go.uber.org/zap"
 )
 

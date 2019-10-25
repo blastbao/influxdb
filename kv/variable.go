@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 
-	influxdb "github.com/influxdata/influxdb"
+	influxdb "github.com/blastbao/influxdb"
 )
 
 var (

@@ -7,12 +7,12 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/influxdata/flux"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/inmem"
-	"github.com/influxdata/influxdb/kit/errors"
-	"github.com/influxdata/influxdb/mock"
-	"github.com/influxdata/influxdb/query"
-	_ "github.com/influxdata/influxdb/query/builtin"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/inmem"
+	"github.com/blastbao/influxdb/kit/errors"
+	"github.com/blastbao/influxdb/mock"
+	"github.com/blastbao/influxdb/query"
+	_ "github.com/blastbao/influxdb/query/builtin"
 )
 
 func newBucketServiceWithOneBucket(bucket platform.Bucket) platform.BucketService {

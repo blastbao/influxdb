@@ -10,7 +10,7 @@ import (
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/execute"
 	"github.com/influxdata/flux/execute/executetest"
-	"github.com/influxdata/influxdb/query/influxql"
+	"github.com/blastbao/influxdb/query/influxql"
 )
 
 func TestMultiResultEncoder_Encode(t *testing.T) {

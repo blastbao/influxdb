@@ -11,9 +11,9 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/tsdb"
-	"github.com/influxdata/influxdb/tsdb/tsi1"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb/tsi1"
 )
 
 // Bloom filter settings used in tests.

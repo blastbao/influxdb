@@ -3,8 +3,8 @@ package influxdb_test
 import (
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	influxdbtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	influxdbtesting "github.com/blastbao/influxdb/testing"
 )
 
 func TestAuthorizer_PermissionAllowed(t *testing.T) {

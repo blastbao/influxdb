@@ -7,13 +7,13 @@ import (
 	"testing"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	pmock "github.com/influxdata/influxdb/mock"
-	_ "github.com/influxdata/influxdb/query/builtin"
-	"github.com/influxdata/influxdb/snowflake"
-	"github.com/influxdata/influxdb/task/backend"
-	"github.com/influxdata/influxdb/task/backend/coordinator"
-	"github.com/influxdata/influxdb/task/mock"
+	platform "github.com/blastbao/influxdb"
+	pmock "github.com/blastbao/influxdb/mock"
+	_ "github.com/blastbao/influxdb/query/builtin"
+	"github.com/blastbao/influxdb/snowflake"
+	"github.com/blastbao/influxdb/task/backend"
+	"github.com/blastbao/influxdb/task/backend/coordinator"
+	"github.com/blastbao/influxdb/task/mock"
 	"go.uber.org/zap/zaptest"
 )
 

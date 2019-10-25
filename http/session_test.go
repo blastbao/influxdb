@@ -9,9 +9,9 @@ import (
 
 	"go.uber.org/zap"
 
-	platform "github.com/influxdata/influxdb"
-	platformhttp "github.com/influxdata/influxdb/http"
-	"github.com/influxdata/influxdb/mock"
+	platform "github.com/blastbao/influxdb"
+	platformhttp "github.com/blastbao/influxdb/http"
+	"github.com/blastbao/influxdb/mock"
 )
 
 // NewMockSessionBackend returns a SessionBackend with mock services.

@@ -4,10 +4,10 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb"
 
-	"github.com/influxdata/influxdb/nats"
-	"github.com/influxdata/influxdb/storage"
+	"github.com/blastbao/influxdb/nats"
+	"github.com/blastbao/influxdb/storage"
 	"go.uber.org/zap"
 )
 

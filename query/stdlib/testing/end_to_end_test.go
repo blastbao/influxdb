@@ -14,12 +14,12 @@ import (
 	"github.com/influxdata/flux/parser"
 	"github.com/influxdata/flux/stdlib"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/cmd/influxd/launcher"
-	"github.com/influxdata/influxdb/query"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/cmd/influxd/launcher"
+	"github.com/blastbao/influxdb/query"
 
 	_ "github.com/influxdata/flux/stdlib"           // Import the built-in functions
-	_ "github.com/influxdata/influxdb/query/stdlib" // Import the stdlib
+	_ "github.com/blastbao/influxdb/query/stdlib" // Import the stdlib
 )
 
 // Default context.

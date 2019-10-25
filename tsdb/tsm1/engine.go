@@ -1,5 +1,5 @@
 // Package tsm1 provides a TSDB in the Time Structured Merge tree format.
-package tsm1 // import "github.com/influxdata/influxdb/tsdb/tsm1"
+package tsm1 // import "github.com/blastbao/influxdb/tsdb/tsm1"
 
 import (
 	"bytes"
@@ -15,15 +15,15 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/influxdata/influxdb/kit/tracing"
-	"github.com/influxdata/influxdb/logger"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/pkg/lifecycle"
-	"github.com/influxdata/influxdb/pkg/limiter"
-	"github.com/influxdata/influxdb/pkg/metrics"
-	"github.com/influxdata/influxdb/query"
-	"github.com/influxdata/influxdb/tsdb"
-	"github.com/influxdata/influxdb/tsdb/tsi1"
+	"github.com/blastbao/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/logger"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/pkg/lifecycle"
+	"github.com/blastbao/influxdb/pkg/limiter"
+	"github.com/blastbao/influxdb/pkg/metrics"
+	"github.com/blastbao/influxdb/query"
+	"github.com/blastbao/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb/tsi1"
 	"github.com/influxdata/influxql"
 	opentracing "github.com/opentracing/opentracing-go"
 	"github.com/prometheus/client_golang/prometheus"
@@ -31,8 +31,8 @@ import (
 )
 
 //go:generate env GO111MODULE=on go run github.com/benbjohnson/tmpl -data=@array_cursor.gen.go.tmpldata array_cursor.gen.go.tmpl array_cursor_iterator.gen.go.tmpl
-//go:generate env GO111MODULE=on go run github.com/influxdata/influxdb/tools/tmpl -i -data=file_store.gen.go.tmpldata file_store.gen.go.tmpl=file_store.gen.go
-//go:generate env GO111MODULE=on go run github.com/influxdata/influxdb/tools/tmpl -i -d isArray=y -data=file_store.gen.go.tmpldata file_store.gen.go.tmpl=file_store_array.gen.go
+//go:generate env GO111MODULE=on go run github.com/blastbao/influxdb/tools/tmpl -i -data=file_store.gen.go.tmpldata file_store.gen.go.tmpl=file_store.gen.go
+//go:generate env GO111MODULE=on go run github.com/blastbao/influxdb/tools/tmpl -i -d isArray=y -data=file_store.gen.go.tmpldata file_store.gen.go.tmpl=file_store_array.gen.go
 //go:generate env GO111MODULE=on go run github.com/benbjohnson/tmpl -data=@encoding.gen.go.tmpldata encoding.gen.go.tmpl
 //go:generate env GO111MODULE=on go run github.com/benbjohnson/tmpl -data=@compact.gen.go.tmpldata compact.gen.go.tmpl
 //go:generate env GO111MODULE=on go run github.com/benbjohnson/tmpl -data=@reader.gen.go.tmpldata reader.gen.go.tmpl

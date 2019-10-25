@@ -10,9 +10,9 @@ import (
 	"github.com/BurntSushi/toml"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"github.com/influxdata/influxdb/telegraf/plugins"
-	"github.com/influxdata/influxdb/telegraf/plugins/inputs"
-	"github.com/influxdata/influxdb/telegraf/plugins/outputs"
+	"github.com/blastbao/influxdb/telegraf/plugins"
+	"github.com/blastbao/influxdb/telegraf/plugins/inputs"
+	"github.com/blastbao/influxdb/telegraf/plugins/outputs"
 )
 
 var telegrafCmpOptions = cmp.Options{

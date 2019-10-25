@@ -5,11 +5,11 @@ const supportLinks = [
   {link: 'https://v2.docs.influxdata.com/v2.0/', title: '📜 Documentation'},
   {link: 'https://community.influxdata.com', title: '💭 Community Forum'},
   {
-    link: 'https://github.com/influxdata/influxdb/issues/new',
+    link: 'https://github.com/blastbao/influxdb/issues/new',
     title: '✨ Feature Requests',
   },
   {
-    link: 'https://github.com/influxdata/influxdb/issues/new',
+    link: 'https://github.com/blastbao/influxdb/issues/new',
     title: '🐛 Report a bug',
   },
 ]

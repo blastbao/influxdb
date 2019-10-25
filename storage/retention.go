@@ -6,8 +6,8 @@ import (
 	"math"
 	"time"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/logger"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/logger"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"
 )

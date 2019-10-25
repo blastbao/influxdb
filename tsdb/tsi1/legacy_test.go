@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb"
 )
 
 func TestLegacyOpen(t *testing.T) {

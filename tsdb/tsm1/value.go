@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/tsdb"
-	"github.com/influxdata/influxdb/tsdb/value"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb/value"
 )
 
 type (

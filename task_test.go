@@ -5,9 +5,9 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	platform "github.com/influxdata/influxdb"
-	_ "github.com/influxdata/influxdb/query/builtin"
-	"github.com/influxdata/influxdb/task/options"
+	platform "github.com/blastbao/influxdb"
+	_ "github.com/blastbao/influxdb/query/builtin"
+	"github.com/blastbao/influxdb/task/options"
 )
 
 func TestOptionsMarshal(t *testing.T) {

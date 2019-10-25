@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/influxdata/influxdb"
+	"github.com/blastbao/influxdb"
 )
 
 var (

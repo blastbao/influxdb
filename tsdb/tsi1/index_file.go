@@ -9,10 +9,10 @@ import (
 	"sync"
 	"unsafe"
 
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/pkg/lifecycle"
-	"github.com/influxdata/influxdb/pkg/mmap"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/pkg/lifecycle"
+	"github.com/blastbao/influxdb/pkg/mmap"
+	"github.com/blastbao/influxdb/tsdb"
 )
 
 // IndexFileVersion is the current TSI1 index file version.

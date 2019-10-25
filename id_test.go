@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 func TestIDFromString(t *testing.T) {

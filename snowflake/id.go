@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/pkg/snowflake"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/pkg/snowflake"
 )
 
 func init() {

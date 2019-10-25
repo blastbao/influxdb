@@ -4,9 +4,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/influxdata/influxdb/toml"
-	"github.com/influxdata/influxdb/tsdb/tsi1"
-	"github.com/influxdata/influxdb/tsdb/tsm1"
+	"github.com/blastbao/influxdb/toml"
+	"github.com/blastbao/influxdb/tsdb/tsi1"
+	"github.com/blastbao/influxdb/tsdb/tsm1"
 )
 
 // Default configuration values.

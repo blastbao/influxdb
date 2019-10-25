@@ -7,8 +7,8 @@ import (
 	"runtime/debug"
 	"sync"
 
-	platform "github.com/influxdata/influxdb"
-	influxlogger "github.com/influxdata/influxdb/logger"
+	platform "github.com/blastbao/influxdb"
+	influxlogger "github.com/blastbao/influxdb/logger"
 	"github.com/julienschmidt/httprouter"
 	"go.uber.org/zap"
 )

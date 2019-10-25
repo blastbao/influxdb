@@ -8,10 +8,10 @@ import (
 	"net/url"
 
 	"github.com/bouk/httprouter"
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/enterprise"
-	"github.com/influxdata/influxdb/chronograf/influx"
-	"github.com/influxdata/influxdb/chronograf/organizations"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/enterprise"
+	"github.com/blastbao/influxdb/chronograf/influx"
+	"github.com/blastbao/influxdb/chronograf/organizations"
 )
 
 type sourceLinks struct {

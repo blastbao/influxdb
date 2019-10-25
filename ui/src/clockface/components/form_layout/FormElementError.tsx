@@ -16,7 +16,7 @@ class FormElementError extends Component<Props> {
   private get message() {
     const {message} = this.props
 
-    // TODO(watts): temporary workaround for: https://github.com/influxdata/influxdb/issues/11372
+    // TODO(watts): temporary workaround for: https://github.com/blastbao/influxdb/issues/11372
     if (!message) {
       return '\u00a0\u00a0'
     }

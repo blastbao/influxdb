@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	platcontext "github.com/influxdata/influxdb/context"
+	platform "github.com/blastbao/influxdb"
+	platcontext "github.com/blastbao/influxdb/context"
 	"github.com/julienschmidt/httprouter"
 	"go.uber.org/zap"
 )

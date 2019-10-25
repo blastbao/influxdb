@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"sort"
 
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/oauth2"
-	"github.com/influxdata/influxdb/chronograf/organizations"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/oauth2"
+	"github.com/blastbao/influxdb/chronograf/organizations"
 	"golang.org/x/net/context"
 )
 

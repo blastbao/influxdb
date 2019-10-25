@@ -9,11 +9,11 @@ import (
 
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/lang"
-	"github.com/influxdata/influxdb"
-	icontext "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/logger"
-	"github.com/influxdata/influxdb/query"
-	"github.com/influxdata/influxdb/task/backend"
+	"github.com/blastbao/influxdb"
+	icontext "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/logger"
+	"github.com/blastbao/influxdb/query"
+	"github.com/blastbao/influxdb/task/backend"
 	"go.uber.org/zap"
 )
 

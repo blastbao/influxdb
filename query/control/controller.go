@@ -8,9 +8,9 @@ import (
 	"github.com/influxdata/flux/control"
 	"github.com/prometheus/client_golang/prometheus"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/tracing"
-	"github.com/influxdata/influxdb/query"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/query"
 )
 
 // orgLabel is the metric label to use in the controller

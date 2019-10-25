@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb/tsdb/tsi1"
+	"github.com/blastbao/influxdb/tsdb/tsi1"
 )
 
 func TestMeasurementCardinalityStats_WriteTo(t *testing.T) {

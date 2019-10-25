@@ -12,12 +12,12 @@ import (
 	"time"
 
 	"github.com/influxdata/flux"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/prom"
-	"github.com/influxdata/influxdb/kit/prom/promtest"
-	_ "github.com/influxdata/influxdb/query/builtin"
-	"github.com/influxdata/influxdb/task/backend"
-	"github.com/influxdata/influxdb/task/mock"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/prom"
+	"github.com/blastbao/influxdb/kit/prom/promtest"
+	_ "github.com/blastbao/influxdb/query/builtin"
+	"github.com/blastbao/influxdb/task/backend"
+	"github.com/blastbao/influxdb/task/mock"
 	"go.uber.org/zap/zaptest"
 )
 

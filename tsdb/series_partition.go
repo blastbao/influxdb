@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/influxdata/influxdb/logger"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/pkg/rhh"
+	"github.com/blastbao/influxdb/logger"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/pkg/rhh"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"
 )

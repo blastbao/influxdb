@@ -64,7 +64,7 @@ Approximate times for retrieving a set of matching series ids for different tota
  - Retrieve 100,000 series ids for db with cardinality 10,000,000: `~22ms` (`10µs`)
 
 
-Note: the initial time is for the first observation. The second—parenthesised—time is for subsequent observations. Subsequent observations make use of the TSI bitset cache introduced in [#10234](https://github.com/influxdata/influxdb/pull/10234).
+Note: the initial time is for the first observation. The second—parenthesised—time is for subsequent observations. Subsequent observations make use of the TSI bitset cache introduced in [#10234](https://github.com/blastbao/influxdb/pull/10234).
 
 
 ## Complex Series ID Retrieval
@@ -75,7 +75,7 @@ Approximate times for retrieving a set of matching series ids for different tota
  - Retrieve 10,000 series ids for db with cardinality 10,000,000: `~7ms` (`25µs`)
 
 
-Note: the initial time is for the first observation. The second—parenthesised—time is for subsequent observations. Subsequent observations make use of the TSI bitset cache introduced in [#10234](https://github.com/influxdata/influxdb/pull/10234).
+Note: the initial time is for the first observation. The second—parenthesised—time is for subsequent observations. Subsequent observations make use of the TSI bitset cache introduced in [#10234](https://github.com/blastbao/influxdb/pull/10234).
 In these more complex cases, a series ID set is retrieved for each of the predicates. The sets are then intersected to identify the final set. Cache times, then, are typically doubled since each series id set for each predicate is stored separately. 
 There will be some additional overhead for the intersection operation.
 

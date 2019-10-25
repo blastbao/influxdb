@@ -16,10 +16,10 @@ import (
 
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/lang"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/bolt"
-	"github.com/influxdata/influxdb/http"
-	"github.com/influxdata/influxdb/query"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/bolt"
+	"github.com/blastbao/influxdb/http"
+	"github.com/blastbao/influxdb/query"
 )
 
 // TestLauncher is a test wrapper for launcher.Launcher.

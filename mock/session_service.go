@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 // SessionService is a mock implementation of a retention.SessionService, which

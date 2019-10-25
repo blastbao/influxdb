@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/prom"
-	"github.com/influxdata/influxdb/kit/prom/promtest"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/prom"
+	"github.com/blastbao/influxdb/kit/prom/promtest"
 )
 
 func TestInitialMetrics(t *testing.T) {

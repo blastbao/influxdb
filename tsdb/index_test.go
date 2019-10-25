@@ -11,11 +11,11 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/influxdata/influxdb/logger"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/query"
-	"github.com/influxdata/influxdb/tsdb"
-	"github.com/influxdata/influxdb/tsdb/tsi1"
+	"github.com/blastbao/influxdb/logger"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/query"
+	"github.com/blastbao/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb/tsi1"
 	"github.com/influxdata/influxql"
 )
 

@@ -7,8 +7,8 @@ import (
 	"regexp"
 	"unsafe"
 
-	"github.com/influxdata/influxdb/pkg/lifecycle"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/pkg/lifecycle"
+	"github.com/blastbao/influxdb/tsdb"
 	"github.com/influxdata/influxql"
 )
 

@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/tsdb"
 )
 
 func Test_NewSeriesCursor_UnexpectedOrg(t *testing.T) {

@@ -5,11 +5,11 @@ import (
 	"errors"
 	"sort"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/pkg/lifecycle"
-	"github.com/influxdata/influxdb/tsdb"
-	"github.com/influxdata/influxdb/tsdb/tsi1"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/pkg/lifecycle"
+	"github.com/blastbao/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb/tsi1"
 	"github.com/influxdata/influxql"
 )
 

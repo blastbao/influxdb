@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/influxdata/influxdb/storage/reads/datatypes"
-	"github.com/influxdata/influxdb/tsdb/cursors"
+	"github.com/blastbao/influxdb/storage/reads/datatypes"
+	"github.com/blastbao/influxdb/tsdb/cursors"
 )
 
 type singleValue struct {

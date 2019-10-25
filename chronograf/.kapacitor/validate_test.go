@@ -1,7 +1,7 @@
 package kapacitor
 
 import "testing"
-import "github.com/influxdata/influxdb/chronograf"
+import "github.com/blastbao/influxdb/chronograf"
 
 func TestValidateAlert(t *testing.T) {
 	tests := []struct {

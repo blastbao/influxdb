@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/influxdata/influxdb/kit/prom"
+	"github.com/blastbao/influxdb/kit/prom"
 	opentracing "github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/opentracing/opentracing-go/log"

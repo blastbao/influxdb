@@ -3,9 +3,9 @@ package influxdb_test
 import (
 	"testing"
 
-	"github.com/influxdata/influxdb"
-	platform "github.com/influxdata/influxdb"
-	influxtest "github.com/influxdata/influxdb/testing"
+	"github.com/blastbao/influxdb"
+	platform "github.com/blastbao/influxdb"
+	influxtest "github.com/blastbao/influxdb/testing"
 )
 
 const (

@@ -6,10 +6,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/influxdata/influxdb/kit/cli"
-	influxlogger "github.com/influxdata/influxdb/logger"
-	"github.com/influxdata/influxdb/prometheus"
-	"github.com/influxdata/influxdb/telemetry"
+	"github.com/blastbao/influxdb/kit/cli"
+	influxlogger "github.com/blastbao/influxdb/logger"
+	"github.com/blastbao/influxdb/prometheus"
+	"github.com/blastbao/influxdb/telemetry"
 	"go.uber.org/zap"
 )
 

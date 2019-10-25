@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/bolt"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/bolt"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 func initDashboardService(f platformtesting.DashboardFields, t *testing.T) (platform.DashboardService, string, func()) {

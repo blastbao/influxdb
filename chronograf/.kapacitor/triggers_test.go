@@ -3,7 +3,7 @@ package kapacitor
 import (
 	"testing"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 func TestTrigger(t *testing.T) {

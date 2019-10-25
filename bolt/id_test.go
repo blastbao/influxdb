@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/influxdata/influxdb/mock"
+	"github.com/blastbao/influxdb/mock"
 )
 
 func TestID(t *testing.T) {

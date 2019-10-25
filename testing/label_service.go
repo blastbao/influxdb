@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/mock"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/mock"
 )
 
 const (

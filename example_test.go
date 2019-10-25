@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/bolt"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/bolt"
 )
 
 func ExampleKeyValueLog() {

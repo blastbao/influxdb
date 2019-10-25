@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 func initBucketService(f platformtesting.BucketFields, t *testing.T) (platform.BucketService, string, func()) {

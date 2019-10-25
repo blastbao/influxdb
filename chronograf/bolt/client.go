@@ -9,8 +9,8 @@ import (
 	"time"
 
 	bolt "github.com/coreos/bbolt"
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/id"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/id"
 )
 
 // Client is a client for the boltDB data store.

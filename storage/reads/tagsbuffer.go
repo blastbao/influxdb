@@ -1,7 +1,7 @@
 package reads
 
 import (
-	"github.com/influxdata/influxdb/models"
+	"github.com/blastbao/influxdb/models"
 )
 
 type tagsBuffer struct {

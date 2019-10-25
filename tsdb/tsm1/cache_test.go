@@ -13,7 +13,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/influxdata/influxdb/storage/wal"
+	"github.com/blastbao/influxdb/storage/wal"
 
 	"github.com/golang/snappy"
 )

@@ -8,12 +8,12 @@ import (
 	"time"
 
 	bolt "github.com/coreos/bbolt"
-	"github.com/influxdata/influxdb"
-	_ "github.com/influxdata/influxdb/query/builtin"
-	"github.com/influxdata/influxdb/task/backend"
-	boltstore "github.com/influxdata/influxdb/task/backend/bolt"
-	"github.com/influxdata/influxdb/task/backend/storetest"
-	"github.com/influxdata/influxdb/task/options"
+	"github.com/blastbao/influxdb"
+	_ "github.com/blastbao/influxdb/query/builtin"
+	"github.com/blastbao/influxdb/task/backend"
+	boltstore "github.com/blastbao/influxdb/task/backend/bolt"
+	"github.com/blastbao/influxdb/task/backend/storetest"
+	"github.com/blastbao/influxdb/task/options"
 )
 
 func init() {

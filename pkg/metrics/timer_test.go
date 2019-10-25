@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influxdb/pkg/testing/assert"
+	"github.com/blastbao/influxdb/pkg/testing/assert"
 )
 
 func TestTimer_Update(t *testing.T) {

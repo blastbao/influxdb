@@ -3,7 +3,7 @@ package kv_test
 import (
 	"testing"
 
-	influxdbtesting "github.com/influxdata/influxdb/testing"
+	influxdbtesting "github.com/blastbao/influxdb/testing"
 )
 
 func TestBoltDocumentStore(t *testing.T) {
@@ -17,7 +17,7 @@ func TestBoltDocumentStore(t *testing.T) {
 }
 
 func TestInmemDocumentStore(t *testing.T) {
-	t.Skip("https://github.com/influxdata/influxdb/issues/12403")
+	t.Skip("https://github.com/blastbao/influxdb/issues/12403")
 	inmemStore, closeInmem, err := NewTestInmemStore()
 	if err != nil {
 		t.Fatalf("failed to create new inmem kv store: %v", err)

@@ -6,7 +6,7 @@ import (
 	"math"
 	"unsafe"
 
-	"github.com/influxdata/influxdb/pkg/encoding/simple8b"
+	"github.com/blastbao/influxdb/pkg/encoding/simple8b"
 )
 
 // TimeArrayEncodeAll encodes src into b, returning b and any error encountered.

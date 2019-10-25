@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/gogo/protobuf/proto"
-	pr "github.com/influxdata/influxdb/prometheus"
+	pr "github.com/blastbao/influxdb/prometheus"
 	dto "github.com/prometheus/client_model/go"
 )
 

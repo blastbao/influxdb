@@ -5,9 +5,9 @@ import (
 
 	"google.golang.org/grpc/metadata"
 
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/storage/reads/datatypes"
-	"github.com/influxdata/influxdb/tsdb/cursors"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/storage/reads/datatypes"
+	"github.com/blastbao/influxdb/tsdb/cursors"
 )
 
 type ResponseStream interface {

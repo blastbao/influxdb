@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb/pkg/pointer"
-	_ "github.com/influxdata/influxdb/query/builtin"
-	"github.com/influxdata/influxdb/task/options"
+	"github.com/blastbao/influxdb/pkg/pointer"
+	_ "github.com/blastbao/influxdb/query/builtin"
+	"github.com/blastbao/influxdb/task/options"
 )
 
 func scriptGenerator(opt options.Options, body string) string {

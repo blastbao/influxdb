@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 func TestEnvironment(t *testing.T) {

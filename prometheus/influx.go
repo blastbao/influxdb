@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

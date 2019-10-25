@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 // ensure ServersStore implements chronograf.ServersStore

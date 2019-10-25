@@ -6,9 +6,9 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/tsdb"
-	"github.com/influxdata/influxdb/tsdb/tsi1"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/tsdb"
+	"github.com/blastbao/influxdb/tsdb/tsi1"
 )
 
 // Ensure fileset can return an iterator over all series in the index.

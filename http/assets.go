@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 
 	// TODO: use platform version of the code
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/dist"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/dist"
 )
 
 const (

@@ -15,9 +15,9 @@ import (
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/csv"
 	"github.com/influxdata/flux/lang"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/check"
-	"github.com/influxdata/influxdb/query"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/check"
+	"github.com/blastbao/influxdb/query"
 )
 
 func TestFluxService_Query(t *testing.T) {

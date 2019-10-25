@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 func initOrganizationService(f platformtesting.OrganizationFields, t *testing.T) (platform.OrganizationService, string, func()) {

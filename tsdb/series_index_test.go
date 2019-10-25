@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/tsdb"
 )
 
 func toTypedSeriesID(id uint64) tsdb.SeriesIDTyped {

@@ -3,8 +3,8 @@ package reads
 import (
 	"context"
 
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/tsdb/cursors"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/tsdb/cursors"
 	"github.com/influxdata/influxql"
 )
 

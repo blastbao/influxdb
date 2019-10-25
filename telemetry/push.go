@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"time"
 
-	pr "github.com/influxdata/influxdb/prometheus"
+	pr "github.com/blastbao/influxdb/prometheus"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/expfmt"
 )

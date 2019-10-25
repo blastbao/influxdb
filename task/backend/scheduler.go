@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/influxdata/flux"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/tracing"
-	"github.com/influxdata/influxdb/task/options"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/task/options"
 	opentracing "github.com/opentracing/opentracing-go"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"

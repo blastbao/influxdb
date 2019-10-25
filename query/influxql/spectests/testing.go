@@ -10,10 +10,10 @@ import (
 	"github.com/andreyvit/diff"
 	"github.com/influxdata/flux/ast"
 	"github.com/influxdata/flux/parser"
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/mock"
-	"github.com/influxdata/influxdb/query/influxql"
-	platformtesting "github.com/influxdata/influxdb/testing"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/mock"
+	"github.com/blastbao/influxdb/query/influxql"
+	platformtesting "github.com/blastbao/influxdb/testing"
 )
 
 var dbrpMappingSvc = mock.NewDBRPMappingService()

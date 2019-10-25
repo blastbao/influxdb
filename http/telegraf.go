@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	"github.com/golang/gddo/httputil"
-	platform "github.com/influxdata/influxdb"
-	pctx "github.com/influxdata/influxdb/context"
-	"github.com/influxdata/influxdb/telegraf/plugins"
+	platform "github.com/blastbao/influxdb"
+	pctx "github.com/blastbao/influxdb/context"
+	"github.com/blastbao/influxdb/telegraf/plugins"
 	"github.com/julienschmidt/httprouter"
 	"go.uber.org/zap"
 )
@@ -124,7 +124,7 @@ type telegrafLinks struct {
 
 // MarshalJSON implement the json.Marshaler interface.
 // TODO: remove this hack and make labels and links return.
-// see: https://github.com/influxdata/influxdb/issues/12457
+// see: https://github.com/blastbao/influxdb/issues/12457
 func (r *telegrafResponse) MarshalJSON() ([]byte, error) {
 	// telegrafPluginEncode is the helper struct for json encoding.
 	type telegrafPluginEncode struct {

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 type tabWriter struct {

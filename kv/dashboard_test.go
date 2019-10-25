@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kv"
-	influxdbtesting "github.com/influxdata/influxdb/testing"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kv"
+	influxdbtesting "github.com/blastbao/influxdb/testing"
 )
 
 func TestBoltDashboardService(t *testing.T) {

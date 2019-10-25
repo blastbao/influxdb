@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/task/options"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/task/options"
 	cron "gopkg.in/robfig/cron.v2"
 )
 

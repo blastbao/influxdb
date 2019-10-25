@@ -3,7 +3,7 @@ package server
 import (
 	"testing"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 func TestValidateQueryConfig(t *testing.T) {

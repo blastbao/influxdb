@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 const (

@@ -3,7 +3,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 var _ chronograf.OrganizationConfigStore = &OrganizationConfigStore{}

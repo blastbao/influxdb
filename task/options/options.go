@@ -15,7 +15,7 @@ import (
 	"github.com/influxdata/flux"
 	"github.com/influxdata/flux/semantic"
 	"github.com/influxdata/flux/values"
-	"github.com/influxdata/influxdb/pkg/pointer"
+	"github.com/blastbao/influxdb/pkg/pointer"
 	cron "gopkg.in/robfig/cron.v2"
 )
 

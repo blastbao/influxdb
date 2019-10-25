@@ -9,7 +9,7 @@ package reads
 import (
 	"errors"
 
-	"github.com/influxdata/influxdb/tsdb/cursors"
+	"github.com/blastbao/influxdb/tsdb/cursors"
 )
 
 const (

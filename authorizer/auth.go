@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/influxdata/influxdb"
+	"github.com/blastbao/influxdb"
 )
 
 var _ influxdb.AuthorizationService = (*AuthorizationService)(nil)

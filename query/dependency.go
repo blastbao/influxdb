@@ -3,7 +3,7 @@ package query
 import (
 	"context"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 )
 
 // FromBucketService wraps an platform.BucketService in the BucketLookup interface.

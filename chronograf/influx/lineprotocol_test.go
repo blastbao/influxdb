@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf"
 )
 
 func Test_toLineProtocol(t *testing.T) {

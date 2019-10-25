@@ -7,8 +7,8 @@
 package gen
 
 import (
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/tsdb/cursors"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/tsdb/cursors"
 )
 
 type FloatValuesSequence interface {

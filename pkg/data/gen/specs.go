@@ -11,9 +11,9 @@ import (
 	"unicode/utf8"
 
 	"github.com/BurntSushi/toml"
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/tsdb"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/tsdb"
 	"github.com/pkg/errors"
 )
 

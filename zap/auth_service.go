@@ -3,7 +3,7 @@ package zap
 import (
 	"context"
 
-	platform "github.com/influxdata/influxdb"
+	platform "github.com/blastbao/influxdb"
 	"go.uber.org/zap"
 )
 

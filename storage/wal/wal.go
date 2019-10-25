@@ -22,11 +22,11 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"
 
-	"github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/kit/tracing"
-	"github.com/influxdata/influxdb/pkg/limiter"
-	"github.com/influxdata/influxdb/pkg/pool"
-	"github.com/influxdata/influxdb/tsdb/value"
+	"github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/pkg/limiter"
+	"github.com/blastbao/influxdb/pkg/pool"
+	"github.com/blastbao/influxdb/tsdb/value"
 )
 
 const (

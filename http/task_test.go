@@ -5,14 +5,14 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	platform "github.com/influxdata/influxdb"
-	"github.com/influxdata/influxdb/http"
-	"github.com/influxdata/influxdb/inmem"
-	_ "github.com/influxdata/influxdb/query/builtin"
-	"github.com/influxdata/influxdb/task"
-	"github.com/influxdata/influxdb/task/backend"
-	tmock "github.com/influxdata/influxdb/task/mock"
-	"github.com/influxdata/influxdb/task/servicetest"
+	platform "github.com/blastbao/influxdb"
+	"github.com/blastbao/influxdb/http"
+	"github.com/blastbao/influxdb/inmem"
+	_ "github.com/blastbao/influxdb/query/builtin"
+	"github.com/blastbao/influxdb/task"
+	"github.com/blastbao/influxdb/task/backend"
+	tmock "github.com/blastbao/influxdb/task/mock"
+	"github.com/blastbao/influxdb/task/servicetest"
 )
 
 func httpTaskServiceFactory(t *testing.T) (*servicetest.System, context.CancelFunc) {

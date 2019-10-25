@@ -3,7 +3,7 @@ package mock
 import (
 	"context"
 
-	"github.com/influxdata/influxdb/kv"
+	"github.com/blastbao/influxdb/kv"
 )
 
 var _ (kv.Store) = (*Store)(nil)

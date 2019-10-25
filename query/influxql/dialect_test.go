@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/influxdata/flux"
-	"github.com/influxdata/influxdb/query/influxql"
+	"github.com/blastbao/influxdb/query/influxql"
 )
 
 func TestDialect(t *testing.T) {

@@ -12,12 +12,12 @@ import (
 	"sync"
 
 	"github.com/cespare/xxhash"
-	"github.com/influxdata/influxdb/kit/tracing"
-	"github.com/influxdata/influxdb/logger"
-	"github.com/influxdata/influxdb/models"
-	"github.com/influxdata/influxdb/pkg/binaryutil"
-	"github.com/influxdata/influxdb/pkg/lifecycle"
-	"github.com/influxdata/influxdb/pkg/rhh"
+	"github.com/blastbao/influxdb/kit/tracing"
+	"github.com/blastbao/influxdb/logger"
+	"github.com/blastbao/influxdb/models"
+	"github.com/blastbao/influxdb/pkg/binaryutil"
+	"github.com/blastbao/influxdb/pkg/lifecycle"
+	"github.com/blastbao/influxdb/pkg/rhh"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"
 	"golang.org/x/sync/errgroup"
@@ -34,7 +34,7 @@ import (
 
 
 
-// Influxdb将paritition数量定死了为 8，就是说所有的serieskey放在这8个桶里，如何确定放在哪个桶里呢？
+// Influxdb 将 paritition 数量定死了为 8，就是说所有的 serieskey 放在这 8个 桶里，如何确定放在哪个桶里呢？
 //
 //
 //
@@ -53,7 +53,7 @@ import (
 
 
 
-// SeriesFile 其实叫SeriesKeyFile比较合适，里面存储了当前DB下的所有series key;
+// SeriesFile 其实叫 SeriesKeyFile 比较合适，里面存储了当前 DB 下的所有 series key;
 // 其中的 seriesKey = (measurement + tag set)
 
 

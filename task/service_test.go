@@ -7,12 +7,12 @@ import (
 	"testing"
 
 	bolt "github.com/coreos/bbolt"
-	"github.com/influxdata/influxdb/inmem"
-	_ "github.com/influxdata/influxdb/query/builtin"
-	"github.com/influxdata/influxdb/task/backend"
-	boltstore "github.com/influxdata/influxdb/task/backend/bolt"
-	"github.com/influxdata/influxdb/task/mock"
-	"github.com/influxdata/influxdb/task/servicetest"
+	"github.com/blastbao/influxdb/inmem"
+	_ "github.com/blastbao/influxdb/query/builtin"
+	"github.com/blastbao/influxdb/task/backend"
+	boltstore "github.com/blastbao/influxdb/task/backend/bolt"
+	"github.com/blastbao/influxdb/task/mock"
+	"github.com/blastbao/influxdb/task/servicetest"
 )
 
 func inMemFactory(t *testing.T) (*servicetest.System, context.CancelFunc) {

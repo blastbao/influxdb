@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/influxdata/influxdb"
+	"github.com/blastbao/influxdb"
 )
 
 var (

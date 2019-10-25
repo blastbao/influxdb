@@ -8,8 +8,8 @@ import (
 	"sort"
 	"time"
 
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/chronograf/id"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/chronograf/id"
 )
 
 const (

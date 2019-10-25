@@ -6,9 +6,9 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/influxdata/influxdb/bolt"
-	"github.com/influxdata/influxdb/inmem"
-	"github.com/influxdata/influxdb/kv"
+	"github.com/blastbao/influxdb/bolt"
+	"github.com/blastbao/influxdb/inmem"
+	"github.com/blastbao/influxdb/kv"
 )
 
 func NewTestBoltStore() (kv.Store, func(), error) {

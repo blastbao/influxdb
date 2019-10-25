@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/influxdata/influxdb/models"
+	"github.com/blastbao/influxdb/models"
 )
 
 func TestEngine_DeleteBucket(t *testing.T) {

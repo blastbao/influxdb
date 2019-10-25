@@ -3,7 +3,7 @@ package logger
 import (
 	"time"
 
-	"github.com/influxdata/influxdb/pkg/snowflake"
+	"github.com/blastbao/influxdb/pkg/snowflake"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

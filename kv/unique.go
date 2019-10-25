@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	influxdb "github.com/influxdata/influxdb"
+	influxdb "github.com/blastbao/influxdb"
 )
 
 // UnexpectedIndexError is used when the error comes from an internal system.

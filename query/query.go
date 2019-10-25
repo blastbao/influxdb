@@ -5,7 +5,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/influxdata/influxdb/models"
+	"github.com/blastbao/influxdb/models"
 	"github.com/influxdata/influxql"
 )
 

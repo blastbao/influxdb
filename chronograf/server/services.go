@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/influxdata/influxdb/chronograf"
-	"github.com/influxdata/influxdb/flux"
+	"github.com/blastbao/influxdb/chronograf"
+	"github.com/blastbao/influxdb/flux"
 )
 
 type postServiceRequest struct {
