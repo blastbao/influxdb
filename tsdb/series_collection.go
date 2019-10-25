@@ -9,15 +9,17 @@ import (
 	"github.com/influxdata/influxdb/pkg/bytesutil"
 )
 
-// SeriesCollection is a struct of arrays representation of a collection of series that allows
-// for efficient filtering.
+// SeriesCollection is a struct of arrays representation of a collection of series
+// that allows for efficient filtering.
 type SeriesCollection struct {
+
 	Points     []models.Point
 	Keys       [][]byte
 	SeriesKeys [][]byte
 	Names      [][]byte
 	Tags       []models.Tags
 	Types      []models.FieldType
+
 	SeriesIDs  []SeriesID
 
 	// Keeps track of invalid entries.
@@ -25,8 +27,8 @@ type SeriesCollection struct {
 	DroppedKeys [][]byte
 	Reason      string
 
-	// Used by the concurrent iterators to stage drops. Inefficient, but should be
-	// very infrequently used.
+	// Used by the concurrent iterators to stage drops.
+	// Inefficient, but should be very infrequently used.
 	state *seriesCollectionState
 }
 
@@ -37,9 +39,10 @@ type seriesCollectionState struct {
 	index  map[int]struct{}
 }
 
-// NewSeriesCollection builds a SeriesCollection from a slice of points. It does some filtering
-// of invalid points.
+// NewSeriesCollection builds a SeriesCollection from a slice of points.
+// It does some filtering of invalid points.
 func NewSeriesCollection(points []models.Point) *SeriesCollection {
+
 	out := &SeriesCollection{
 		Points: append([]models.Point(nil), points...),
 		Keys:   make([][]byte, 0, len(points)),
@@ -48,11 +51,15 @@ func NewSeriesCollection(points []models.Point) *SeriesCollection {
 		Types:  make([]models.FieldType, 0, len(points)),
 	}
 
-	for _, pt := range points {
-		out.Keys = append(out.Keys, pt.Key())
-		out.Names = append(out.Names, pt.Name())
-		out.Tags = append(out.Tags, pt.Tags())
 
+	for _, pt := range points {
+
+		//keys, names, tags
+		out.Keys  = append(out.Keys,  pt.Key())
+		out.Names = append(out.Names, pt.Name())
+		out.Tags  = append(out.Tags,  pt.Tags())
+
+		//types
 		fi := pt.FieldIterator()
 		fi.Next()
 		out.Types = append(out.Types, fi.Type())
@@ -61,12 +68,13 @@ func NewSeriesCollection(points []models.Point) *SeriesCollection {
 	return out
 }
 
-// Duplicate returns a copy of the SeriesCollection. The slices are shared. Appending to any of
-// them may or may not be reflected.
+// Duplicate returns a copy of the SeriesCollection.
+// The slices are shared.
+// Appending to any of them may or may not be reflected.
 func (s SeriesCollection) Duplicate() *SeriesCollection { return &s }
 
-// Length returns the length of the first non-nil slice in the collection, or 0 if there is no
-// non-nil slice.
+// Length returns the length of the first non-nil slice in the collection,
+// or 0 if there is no non-nil slice.
 func (s *SeriesCollection) Length() int {
 	switch {
 	case s.Points != nil:
@@ -208,9 +216,10 @@ func (s *SeriesCollection) InvalidateAll(reason string) {
 	s.Truncate(0)
 }
 
-// ApplyConcurrentDrops will remove all of the dropped values during concurrent iteration. It should
-// not be called concurrently with any calls to Invalid.
+// ApplyConcurrentDrops will remove all of the dropped values during concurrent iteration.
+// It should not be called concurrently with any calls to Invalid.
 func (s *SeriesCollection) ApplyConcurrentDrops() {
+
 	state := s.getState(false)
 	if state == nil {
 		return
@@ -241,33 +250,38 @@ func (s *SeriesCollection) ApplyConcurrentDrops() {
 	atomic.StorePointer((*unsafe.Pointer)(unsafe.Pointer(&s.state)), nil)
 }
 
-// getState returns the SeriesCollection's concurrent state. If alloc is true and there
-// is no state, it will attempt to allocate one and set it. It is safe to call concurrently, but
-// not with ApplyConcurrentDrops.
+// getState returns the SeriesCollection's concurrent state.
+// If alloc is true and there is no state, it will attempt to allocate one and set it.
+// It is safe to call concurrently, but not with ApplyConcurrentDrops.
 func (s *SeriesCollection) getState(alloc bool) *seriesCollectionState {
 	addr := (*unsafe.Pointer)(unsafe.Pointer(&s.state))
 
-	// fast path: load pointer and it already exists. always return the result if we can't alloc.
+	// fast path: load pointer and it already exists.
+	// always return the result if we can't alloc.
 	if ptr := atomic.LoadPointer(addr); ptr != nil || !alloc {
 		return (*seriesCollectionState)(ptr)
 	}
 
-	// nothing there. make a new state and try to swap it in.
+	// nothing there.
+	// make a new state and try to swap it in.
 	atomic.CompareAndSwapPointer(addr, nil, unsafe.Pointer(new(seriesCollectionState)))
 
-	// reload the pointer. this way we always end up with the winner of the race.
+	// reload the pointer.
+	// this way we always end up with the winner of the race.
 	return (*seriesCollectionState)(atomic.LoadPointer(addr))
 }
 
-// invalidIndex stages the index as invalid with the reason. It will be removed when
-// ApplyConcurrentDrops is called.
+// invalidIndex stages the index as invalid with the reason.
+// It will be removed when ApplyConcurrentDrops is called.
 func (s *SeriesCollection) invalidIndex(index int, reason string) {
+
 	state := s.getState(true)
 
 	state.mu.Lock()
 	if state.index == nil {
 		state.index = make(map[int]struct{})
 	}
+
 	state.index[index] = struct{}{}
 	if state.reason == "" {
 		state.reason = reason
@@ -275,12 +289,14 @@ func (s *SeriesCollection) invalidIndex(index int, reason string) {
 	state.mu.Unlock()
 }
 
-// PartialWriteError returns a PartialWriteError if any entries have been marked as invalid. It
-// returns an error to avoid `return collection.PartialWriteError()` always being non-nil.
+// PartialWriteError returns a PartialWriteError if any entries have been marked as invalid.
+// It returns an error to avoid `return collection.PartialWriteError()` always being non-nil.
 func (s *SeriesCollection) PartialWriteError() error {
+
 	if s.Dropped == 0 {
 		return nil
 	}
+
 	droppedKeys := bytesutil.SortDedup(s.DroppedKeys)
 	return PartialWriteError{
 		Reason:      s.Reason,
@@ -289,9 +305,10 @@ func (s *SeriesCollection) PartialWriteError() error {
 	}
 }
 
-// Iterator returns a new iterator over the entries in the collection. Multiple iterators
-// can exist at the same time. Marking entries as invalid/skipped is more expensive, but thread
-// safe. You must call ApplyConcurrentDrops after all of the iterators are finished.
+// Iterator returns a new iterator over the entries in the collection.
+// Multiple iterators can exist at the same time.
+// Marking entries as invalid/skipped is more expensive, but thread safe.
+// You must call ApplyConcurrentDrops after all of the iterators are finished.
 func (s *SeriesCollection) Iterator() SeriesCollectionIterator {
 	return SeriesCollectionIterator{
 		s:      s,
@@ -313,6 +330,7 @@ func (i *SeriesCollectionIterator) Next() bool {
 	return i.index < i.length
 }
 
+
 // Helpers that return the current state of the iterator.
 
 func (i SeriesCollectionIterator) Index() int             { return i.index }
@@ -325,9 +343,12 @@ func (i SeriesCollectionIterator) Tags() models.Tags      { return i.s.Tags[i.in
 func (i SeriesCollectionIterator) Type() models.FieldType { return i.s.Types[i.index] }
 func (i SeriesCollectionIterator) SeriesID() SeriesID     { return i.s.SeriesIDs[i.index] }
 
-// Invalid flags the current entry as invalid, including it in the set of dropped keys and
-// recording a reason. Only the first reason is kept. This is safe for concurrent callers,
-// but ApplyConcurrentDrops must be called after all iterators are finished.
+
+
+
+// Invalid flags the current entry as invalid, including it in the set of dropped keys and recording a reason.
+// Only the first reason is kept.
+// This is safe for concurrent callers, but ApplyConcurrentDrops must be called after all iterators are finished.
 func (i *SeriesCollectionIterator) Invalid(reason string) {
 	i.s.invalidIndex(i.index, reason)
 }

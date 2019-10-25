@@ -28,27 +28,34 @@ const DefaultSeriesPartitionCompactThreshold = 1 << 17 // 128K
 
 // SeriesPartition represents a subset of series file data.
 type SeriesPartition struct {
+
+
 	mu   sync.RWMutex
 	wg   sync.WaitGroup
 	id   int
 	path string
 
+
 	closed  bool
 	closing chan struct{}
 	once    sync.Once
 
+
 	segments []*SeriesSegment
+
 	index    *SeriesIndex
 	seq      uint64 // series id sequence
 
-	compacting          bool
-	compactionsDisabled int
 
-	CompactThreshold int
+	compacting          bool  //true: 正在压缩中
+	compactionsDisabled int   //0: 开启压缩，非0: 关闭压缩
+	CompactThreshold    int   //压缩阈值，默认128K个SeriesKey执行一次Compact
 
 	tracker *seriesPartitionTracker
 	Logger  *zap.Logger
 }
+
+
 
 // NewSeriesPartition returns a new instance of SeriesPartition.
 func NewSeriesPartition(id int, path string) *SeriesPartition {
@@ -65,6 +72,7 @@ func NewSeriesPartition(id int, path string) *SeriesPartition {
 	return p
 }
 
+
 // Open memory maps the data file at the partition's path.
 func (p *SeriesPartition) Open() error {
 	if p.closed {
@@ -78,20 +86,26 @@ func (p *SeriesPartition) Open() error {
 
 	// Open components.
 	if err := func() (err error) {
+
+		//1. open all segments and get a group of SeriesSegments.
 		if err := p.openSegments(); err != nil {
 			return err
 		}
-		// Init last segment for writes.
+
+		//2. init the last segment for writes.
 		if err := p.activeSegment().InitForWrite(); err != nil {
 			return err
 		}
 
+		//3. open index file and rebuild it with p.segments
 		if err := p.index.Open(); err != nil {
 			return err
 		} else if p.index.Recover(p.segments); err != nil {
 			return err
 		}
+
 		return nil
+
 	}(); err != nil {
 		p.Close()
 		return err
@@ -102,26 +116,39 @@ func (p *SeriesPartition) Open() error {
 	return nil
 }
 
+
+
+//1. traverse segment files in directory `p.path`
+//2. open&parse every segment files and wrap them as a group of SeriesSegment struct
+//3. get max series id by searching segments in reverse order.
 func (p *SeriesPartition) openSegments() error {
+
+	//1. open&read directory
 	fis, err := ioutil.ReadDir(p.path)
 	if err != nil {
 		return err
 	}
 
+	//2. traverse files of `path` directory
 	for _, fi := range fis {
+
+		//2.1 returns the segment id represented by the hexidecimal filename.
 		segmentID, err := ParseSeriesSegmentFilename(fi.Name())
 		if err != nil {
 			continue
 		}
 
+		//2.2 returns a new instance of SeriesSegment, then open it by syscall `mmap`.
 		segment := NewSeriesSegment(segmentID, filepath.Join(p.path, fi.Name()))
 		if err := segment.Open(); err != nil {
 			return err
 		}
+
+		//2.3 append
 		p.segments = append(p.segments, segment)
 	}
 
-	// Find max series id by searching segments in reverse order.
+	//3. Find max series id by searching segments in reverse order.
 	for i := len(p.segments) - 1; i >= 0; i-- {
 		if seq := p.segments[i].MaxSeriesID(); seq.RawID() >= p.seq {
 			// Reset our sequence num to the next one to assign
@@ -130,7 +157,7 @@ func (p *SeriesPartition) openSegments() error {
 		}
 	}
 
-	// Create initial segment if none exist.
+	//4. Create initial segment if none exist.
 	if len(p.segments) == 0 {
 		segment, err := CreateSeriesSegment(0, filepath.Join(p.path, "0000"))
 		if err != nil {
@@ -139,9 +166,11 @@ func (p *SeriesPartition) openSegments() error {
 		p.segments = append(p.segments, segment)
 	}
 
+	// ...
 	p.tracker.SetSegments(uint64(len(p.segments)))
 	return nil
 }
+
 
 // Close unmaps the data files.
 func (p *SeriesPartition) Close() (err error) {
@@ -153,6 +182,7 @@ func (p *SeriesPartition) Close() (err error) {
 
 	p.closed = true
 
+	// close segments
 	for _, s := range p.segments {
 		if e := s.Close(); e != nil && err == nil {
 			err = e
@@ -160,6 +190,7 @@ func (p *SeriesPartition) Close() (err error) {
 	}
 	p.segments = nil
 
+	// close indexs
 	if p.index != nil {
 		if e := p.index.Close(); e != nil && err == nil {
 			err = e
@@ -179,37 +210,73 @@ func (p *SeriesPartition) Path() string { return p.path }
 // IndexPath returns the path to the series index.
 func (p *SeriesPartition) IndexPath() string { return filepath.Join(p.path, "index") }
 
+
 // CreateSeriesListIfNotExists creates a list of series in bulk if they don't exist.
+//
 // The ids parameter is modified to contain series IDs for all keys belonging to this partition.
+//
 // If the type does not match the existing type for the key, a zero id is stored.
-func (p *SeriesPartition) CreateSeriesListIfNotExists(collection *SeriesCollection,
-	keyPartitionIDs []int) error {
+
+
+
+//给定一系列 Series key, 返回对应的Series id，如果没有对应的id,则将series key插入到Partition（其实就是写入到对应的segment中）
+
+
+
+//
+
+
+
+// 在内存中的Index数量超过阈值时，会在调用CreateSeriesListIfNoExists时被compact到磁盘文件;
+
+
+
+
+
+// keyPartitionIDs[] 中存储了 SeriesKeys 其对应的 PartitionIDs。
+
+func (p *SeriesPartition) CreateSeriesListIfNotExists(collection *SeriesCollection, keyPartitionIDs []int) error {
 
 	p.mu.RLock()
+
 	if p.closed {
 		p.mu.RUnlock()
 		return ErrSeriesPartitionClosed
 	}
 
 	writeRequired := 0
+
+
+
+	//1. 第一轮扫描
 	for iter := collection.Iterator(); iter.Next(); {
+		//1.0. 获取 collection 迭代器下标
 		index := iter.Index()
+
+		//1.1. 检查当前 seriesKey 对应的 partitionID 是否是本 partition，如果不是则 skip 忽略，以支持并发写入。
 		if keyPartitionIDs[index] != p.id {
 			continue
 		}
+
+		//1.2. 根据 seriesKey 在当前 partition.segments[] 中查询 seriesKey 对应的 seriesID。
 		id := p.index.FindIDBySeriesKey(p.segments, iter.SeriesKey())
+
+		//1.3. 如果在本 partition.segments[] 中查找不到 seriesKey 对应的 seriesID，就更新 writeRequired++，留待后续插入。
 		if id.IsZero() {
 			writeRequired++
 			continue
 		}
+
+		//1.4. 类型检查：?
 		if id.HasType() && id.Type() != iter.Type() {
-			iter.Invalid(fmt.Sprintf(
-				"series type mismatch: already %s but got %s",
-				id.Type(), iter.Type()))
+			iter.Invalid(fmt.Sprintf("series type mismatch: already %s but got %s", id.Type(), iter.Type()))
 			continue
 		}
+
+		//1.5. （重要）把根据 seriesKey 查询获得的 seriesID 保存到 collection 中，否则对应位置上仍保持旧值 zero。
 		collection.SeriesIDs[index] = id.SeriesID()
 	}
+
 	p.mu.RUnlock()
 
 	// Exit if all series for this partition already exist.
@@ -218,8 +285,8 @@ func (p *SeriesPartition) CreateSeriesListIfNotExists(collection *SeriesCollecti
 	}
 
 	type keyRange struct {
-		id     SeriesIDTyped
-		offset int64
+		id     SeriesIDTyped   // seriesID
+		offset int64           // seriesEntry 被写入到本 partition 的最新 segment 文件中的偏移，是 segmentID 和 segmentOffset 的结合体。
 	}
 
 	// Preallocate the space we'll need before grabbing the lock.
@@ -230,22 +297,33 @@ func (p *SeriesPartition) CreateSeriesListIfNotExists(collection *SeriesCollecti
 	p.mu.Lock()
 	defer p.mu.Unlock()
 
+
 	if p.closed {
 		return ErrSeriesPartitionClosed
 	}
 
+
+	//2. 第二轮扫描
 	for iter := collection.Iterator(); iter.Next(); {
 		index := iter.Index()
 
-		// Skip series that don't belong to the partition or have already been created.
-		if keyPartitionIDs[index] != p.id || !iter.SeriesID().IsZero() {
+		//2.1 检查当前 seriesKey 对应的 partitionID 是否是本 partition
+		if keyPartitionIDs[index] != p.id {
 			continue
 		}
 
-		// Re-attempt lookup under write lock. Be sure to double check the type. If the type
-		// doesn't match what we found, we should not set the ids field for it, but we should
-		// stop processing the key.
+		//2.2 如果 collection.SeriesIDs[index] 非 Zero，意味着在第一轮扫描时根据 seriesKey 查询到 seriesID 并进行了填充，因此不需再插入。
+		if !iter.SeriesID().IsZero() {
+			continue
+		}
+
+		//2.3
+		// Re-attempt lookup under write lock.
+		// Be sure to double check the type.
+		// If the type doesn't match what we found, we should not set the ids field for it,
+		// but we should stop processing the key.
 		key, typ := iter.SeriesKey(), iter.Type()
+
 
 		// First check the map, then the index.
 		id := newIDs[string(key)]
@@ -253,20 +331,21 @@ func (p *SeriesPartition) CreateSeriesListIfNotExists(collection *SeriesCollecti
 			id = p.index.FindIDBySeriesKey(p.segments, key)
 		}
 
-		// If the id is found, we are done processing this key. We should only set the ids slice
-		// if the type matches.
+
+		// If the id is found, we are done processing this key.
+		// We should only set the ids slice if the type matches.
 		if !id.IsZero() {
 			if id.HasType() && id.Type() != typ {
-				iter.Invalid(fmt.Sprintf(
-					"series type mismatch: already %s but got %s",
-					id.Type(), iter.Type()))
+				iter.Invalid(fmt.Sprintf("series type mismatch: already %s but got %s", id.Type(), iter.Type()))
 				continue
 			}
 			collection.SeriesIDs[index] = id.SeriesID()
 			continue
 		}
 
+
 		// Write to series log and save offset.
+		// 将 seriesKey 写入到 segment 文件中。
 		id, offset, err := p.insert(key, typ)
 		if err != nil {
 			return err
@@ -275,6 +354,8 @@ func (p *SeriesPartition) CreateSeriesListIfNotExists(collection *SeriesCollecti
 		// Append new key to be added to hash map after flush.
 		collection.SeriesIDs[index] = id.SeriesID()
 		newIDs[string(key)] = id
+
+
 		newKeyRanges = append(newKeyRanges, keyRange{id, offset})
 	}
 
@@ -286,14 +367,23 @@ func (p *SeriesPartition) CreateSeriesListIfNotExists(collection *SeriesCollecti
 	}
 
 	// Add keys to hash map(s).
+	// 更新内存索引，主要是两个 HashMap: seriesKey -> seriesID 和 seriesID -> seriesOffset 。
 	for _, keyRange := range newKeyRanges {
 		p.index.Insert(p.seriesKeyByOffset(keyRange.offset), keyRange.id, keyRange.offset)
 	}
+
+
 	p.tracker.AddSeriesCreated(uint64(len(newKeyRanges))) // Track new series in metric.
 	p.tracker.AddSeries(uint64(len(newKeyRanges)))
 
 	// Check if we've crossed the compaction threshold.
-	if p.compactionsEnabled() && !p.compacting && p.CompactThreshold != 0 && p.index.InMemCount() >= uint64(p.CompactThreshold) {
+	if  p.compactionsEnabled() &&
+		!p.compacting &&
+		p.CompactThreshold != 0 &&
+		p.index.InMemCount() >= uint64(p.CompactThreshold) {
+
+
+		// 设置正在压缩中～
 		p.compacting = true
 		log, logEnd := logger.NewOperation(p.Logger, "Series partition compaction", "series_partition_compaction", zap.String("path", p.path))
 
@@ -325,8 +415,11 @@ func (p *SeriesPartition) CreateSeriesListIfNotExists(collection *SeriesCollecti
 		}()
 	}
 
+	// compact 到磁盘文件，下面会详细讲解
 	return nil
 }
+
+
 
 // Compacting returns if the SeriesPartition is currently compacting.
 func (p *SeriesPartition) Compacting() bool {
@@ -350,7 +443,8 @@ func (p *SeriesPartition) DeleteSeriesID(id SeriesID) error {
 		return nil
 	}
 
-	// Write tombstone entry. The type is ignored in tombstones.
+	// Write tombstone entry.
+	// The type is ignored in tombstones.
 	_, err := p.writeLogEntry(AppendSeriesEntry(nil, SeriesEntryTombstoneFlag, id.WithType(models.Empty), nil))
 	if err != nil {
 		return err
@@ -391,6 +485,8 @@ func (p *SeriesPartition) SeriesKey(id SeriesID) []byte {
 		p.mu.RUnlock()
 		return nil
 	}
+
+	// 先用索引根据id获取到offset, 再用offset获取到key
 	key := p.seriesKeyByOffset(p.index.FindOffsetByID(id))
 	p.mu.RUnlock()
 	return key
@@ -485,16 +581,29 @@ func (p *SeriesPartition) activeSegment() *SeriesSegment {
 	return p.segments[len(p.segments)-1]
 }
 
+
+
+// 根据 key 和 typ 生成 seriesID，并构造 seriesEntry 写入到 partition 的最新 segment 文件中。
 func (p *SeriesPartition) insert(key []byte, typ models.FieldType) (id SeriesIDTyped, offset int64, err error) {
+
+	//1. 新待插入的 seriesID 为 p.seq，同时在 seriesID 高位存储类型信息。
 	id = NewSeriesID(p.seq).WithType(typ)
+
+	//2. 根据 seriesID 和 seriesKey 构造 SeriesEntry 追加写入到当前 partition 的最新 segment 文件中，返回的 offset 参数
+	//   中高位存储了 segmentID，地位存储了 segment 文件内偏移。
 	offset, err = p.writeLogEntry(AppendSeriesEntry(nil, SeriesEntryInsertFlag, id, key))
 	if err != nil {
 		return SeriesIDTyped{}, 0, err
 	}
 
+	//3. 每插入一条，p.seq 会递增 SeriesFilePartitionN，why?
 	p.seq += SeriesFilePartitionN
+
+	//4. 返回 seriesID、写入到 segment 文件的 offset
 	return id, offset, nil
 }
+
+
 
 // writeLogEntry appends an entry to the end of the active segment.
 // If there is no more room in the segment then a new segment is added.
@@ -550,7 +659,6 @@ func (p *SeriesPartition) seriesKeyByOffset(offset int64) []byte {
 		if segment.ID() != segmentID {
 			continue
 		}
-
 		key, _ := ReadSeriesKey(segment.Slice(pos + SeriesEntryHeaderSize))
 		return key
 	}
@@ -558,6 +666,10 @@ func (p *SeriesPartition) seriesKeyByOffset(offset int64) []byte {
 	return nil
 }
 
+
+
+
+///
 type seriesPartitionTracker struct {
 	metrics *seriesFileMetrics
 	labels  prometheus.Labels
@@ -691,6 +803,16 @@ func (t *seriesPartitionTracker) IncCompactionOK(duration time.Duration) {
 // IncCompactionErr increments the number of failed compactions for the partition.
 func (t *seriesPartitionTracker) IncCompactionErr() { t.incCompactions("error", 0) }
 
+
+
+
+
+
+
+
+
+
+
 // SeriesPartitionCompactor represents an object reindexes a series partition and optionally compacts segments.
 type SeriesPartitionCompactor struct {
 	cancel <-chan struct{}
@@ -701,8 +823,11 @@ func NewSeriesPartitionCompactor() *SeriesPartitionCompactor {
 	return &SeriesPartitionCompactor{}
 }
 
+
+
 // Compact rebuilds the series partition index.
 func (c *SeriesPartitionCompactor) Compact(p *SeriesPartition) (time.Duration, error) {
+
 	// Snapshot the partitions and index so we can check tombstones and replay at the end under lock.
 	p.mu.RLock()
 	segments := CloneSeriesSegments(p.segments)
@@ -711,7 +836,6 @@ func (c *SeriesPartitionCompactor) Compact(p *SeriesPartition) (time.Duration, e
 	p.mu.RUnlock()
 
 	now := time.Now()
-
 	// Compact index to a temporary location.
 	indexPath := index.path + ".compacting"
 	if err := c.compactIndexTo(index, seriesN, segments, indexPath); err != nil {
@@ -737,6 +861,7 @@ func (c *SeriesPartitionCompactor) Compact(p *SeriesPartition) (time.Duration, e
 		if err := p.index.Recover(p.segments); err != nil {
 			return err
 		}
+
 		return nil
 	}(); err != nil {
 		return 0, err
@@ -746,38 +871,45 @@ func (c *SeriesPartitionCompactor) Compact(p *SeriesPartition) (time.Duration, e
 }
 
 func (c *SeriesPartitionCompactor) compactIndexTo(index *SeriesIndex, seriesN uint64, segments []*SeriesSegment, path string) error {
+
 	hdr := NewSeriesIndexHeader()
 	hdr.Count = seriesN
 	hdr.Capacity = pow2((int64(hdr.Count) * 100) / SeriesIndexLoadFactor)
 
 	// Allocate space for maps.
-	keyIDMap := make([]byte, (hdr.Capacity * SeriesIndexElemSize))
+	// 分配两个 hash map 的内存空间，后面就是填充这两个 map , 然后写到磁盘
+	keyIDMap    := make([]byte, (hdr.Capacity * SeriesIndexElemSize))
 	idOffsetMap := make([]byte, (hdr.Capacity * SeriesIndexElemSize))
+
 
 	// Reindex all partitions.
 	var entryN int
-	for _, segment := range segments {
-		errDone := errors.New("done")
 
-		if err := segment.ForEachEntry(func(flag uint8, id SeriesIDTyped, offset int64, key []byte) error {
+
+	for _, segment := range segments {
+
+		errDone := errors.New("done")
+		if err := segment.ForEachEntry( func(flag uint8, id SeriesIDTyped, offset int64, key []byte) error {
+
 			// Make sure we don't go past the offset where the compaction began.
 			if offset > index.maxOffset {
 				return errDone
 			}
 
 			// Check for cancellation periodically.
+			// 每处理1000条entry，检查 cancel 管道判断 compact 过程是否需要中断
 			if entryN++; entryN%1000 == 0 {
 				select {
 				case <-c.cancel:
-					return ErrSeriesPartitionCompactionCancelled
+					return ErrSeriesPartitionCompactionCancelled //压缩被取消
 				default:
 				}
 			}
 
 			// Only process insert entries.
 			switch flag {
-			case SeriesEntryInsertFlag: // fallthrough
-			case SeriesEntryTombstoneFlag:
+			case SeriesEntryInsertFlag: 	// ...
+			case SeriesEntryTombstoneFlag:  // 遇到墓碑flag，意味着当前 entry 被删除，直接跳过
 				return nil
 			default:
 				return fmt.Errorf("unexpected series partition log entry flag: %d", flag)
@@ -789,19 +921,27 @@ func (c *SeriesPartitionCompactor) compactIndexTo(index *SeriesIndex, seriesN ui
 			hdr.MaxSeriesID, hdr.MaxOffset = untypedID, offset
 
 			// Ignore entry if tombstoned.
+			// 如果id已经被标识为删除，就跳过
 			if index.IsDeleted(untypedID) {
 				return nil
 			}
 
 			// Insert into maps.
+			// 填充 idOffsetMap & keyIDMap 这两个 HashMap
 			c.insertIDOffsetMap(idOffsetMap, hdr.Capacity, untypedID, offset)
 			return c.insertKeyIDMap(keyIDMap, hdr.Capacity, segments, key, offset, id)
+
 		}); err == errDone {
 			break
 		} else if err != nil {
 			return err
 		}
 	}
+
+
+
+	// 执行文件写入
+
 
 	// Open file handler.
 	f, err := os.Create(path)
@@ -811,15 +951,17 @@ func (c *SeriesPartitionCompactor) compactIndexTo(index *SeriesIndex, seriesN ui
 	defer f.Close()
 
 	// Calculate map positions.
-	hdr.KeyIDMap.Offset, hdr.KeyIDMap.Size = SeriesIndexHeaderSize, int64(len(keyIDMap))
-	hdr.IDOffsetMap.Offset, hdr.IDOffsetMap.Size = hdr.KeyIDMap.Offset+hdr.KeyIDMap.Size, int64(len(idOffsetMap))
+	hdr.KeyIDMap.Offset = SeriesIndexHeaderSize
+	hdr.KeyIDMap.Size = int64(len(keyIDMap))
+	hdr.IDOffsetMap.Offset = hdr.KeyIDMap.Offset+hdr.KeyIDMap.Size
+	hdr.IDOffsetMap.Size = int64(len(idOffsetMap))
 
 	// Write header.
 	if _, err := hdr.WriteTo(f); err != nil {
 		return err
 	}
 
-	// Write maps.
+	// Write two hash maps.
 	if _, err := f.Write(keyIDMap); err != nil {
 		return err
 	} else if _, err := f.Write(idOffsetMap); err != nil {
@@ -836,13 +978,21 @@ func (c *SeriesPartitionCompactor) compactIndexTo(index *SeriesIndex, seriesN ui
 	return nil
 }
 
+
+
+
+
 func (c *SeriesPartitionCompactor) insertKeyIDMap(dst []byte, capacity int64, segments []*SeriesSegment, key []byte, offset int64, id SeriesIDTyped) error {
 	mask := capacity - 1
 	hash := rhh.HashKey(key)
 
+
 	// Continue searching until we find an empty slot or lower probe distance.
 	for i, dist, pos := int64(0), int64(0), hash&mask; ; i, dist, pos = i+1, dist+1, (pos+1)&mask {
+
+
 		assert(i <= capacity, "key/id map full")
+
 		elem := dst[(pos * SeriesIndexElemSize):]
 
 		// If empty slot found or matching offset, insert and exit.

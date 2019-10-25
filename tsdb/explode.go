@@ -7,13 +7,19 @@ import (
 	"github.com/influxdata/influxdb/models"
 )
 
+
+
+// 反序列化
 // DecodeName converts tsdb internal serialization back to organization and bucket IDs.
 func DecodeName(name [16]byte) (org, bucket platform.ID) {
+	// name[0:8] => uint64 => org
 	org = platform.ID(binary.BigEndian.Uint64(name[0:8]))
+	// name[8:16] => uint64 => bucket
 	bucket = platform.ID(binary.BigEndian.Uint64(name[8:16]))
 	return
 }
 
+// 序列化
 // EncodeName converts org/bucket pairs to the tsdb internal serialization
 func EncodeName(org, bucket platform.ID) [16]byte {
 	var nameBytes [16]byte
@@ -22,20 +28,32 @@ func EncodeName(org, bucket platform.ID) [16]byte {
 	return nameBytes
 }
 
-// ExplodePoints creates a list of points that only contains one field per point. It also
-// moves the measurement to a tag, and changes the measurement to be the provided argument.
+
+
+
+
+// ExplodePoints creates a list of points that only contains one field per point.
+// It also moves the measurement to a tag, and changes the measurement to be the provided argument.
 func ExplodePoints(org, bucket platform.ID, points []models.Point) ([]models.Point, error) {
+
+
 	out := make([]models.Point, 0, len(points))
 
 	// TODO(jeff): We should add a RawEncode() method or something to the platform.ID type
 	// or we should use hex encoded measurement names. Either way, we shouldn't be doing a
 	// decode of the encode here, and we don't want to depend on details of how the ID type
 	// is represented.
+
+
+	//1. 序列化: (org, bucket) => name
 	ob := EncodeName(org, bucket)
 	name := string(ob[:])
 
 	tags := make(models.Tags, 1)
+
+	//2.
 	for _, pt := range points {
+
 		tags = tags[:1] // reset buffer for next point.
 
 		tags[0] = models.NewTag(models.MeasurementTagKeyBytes, pt.Name())
@@ -44,11 +62,17 @@ func ExplodePoints(org, bucket platform.ID, points []models.Point) ([]models.Poi
 			return true
 		})
 
+		// 时间戳
 		t := pt.Time()
+		// 字段成员迭代器
 		itr := pt.FieldIterator()
+
+
 		tags = append(tags, models.Tag{}) // Make room for field key and value.
 
+		// 遍历字段
 		for itr.Next() {
+
 			tags[len(tags)-1] = models.NewTag(models.FieldKeyTagKeyBytes, itr.FieldKey())
 
 			var err error

@@ -13,8 +13,7 @@ var (
 	ErrUnknownFieldType = errors.New("unknown field type")
 )
 
-// PartialWriteError indicates a write request could only write a portion of the
-// requested values.
+// PartialWriteError indicates a write request could only write a portion of the requested values.
 type PartialWriteError struct {
 	Reason  string
 	Dropped int

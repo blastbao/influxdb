@@ -109,9 +109,7 @@ func CollectionToValues(collection *tsdb.SeriesCollection) (map[string][]Value, 
 			vs, ok := values[string(keyBuf)]
 			if ok && len(vs) > 0 && valueType(vs[0]) != valueType(v) {
 				if collection.Reason == "" {
-					collection.Reason = fmt.Sprintf(
-						"conflicting field type: %s has field type %T but expected %T",
-						citer.Key(), v.Value(), vs[0].Value())
+					collection.Reason = fmt.Sprintf("conflicting field type: %s has field type %T but expected %T", citer.Key(), v.Value(), vs[0].Value())
 				}
 				collection.Dropped++
 				collection.DroppedKeys = append(collection.DroppedKeys, citer.Key())

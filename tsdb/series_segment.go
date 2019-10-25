@@ -26,8 +26,8 @@ const (
 	SeriesEntryFlagSize   = 1
 	SeriesEntryHeaderSize = 1 + 8 // flag + id
 
-	SeriesEntryInsertFlag    = 0x01
-	SeriesEntryTombstoneFlag = 0x02
+	SeriesEntryInsertFlag    = 0x01  //inserted
+	SeriesEntryTombstoneFlag = 0x02  //deleted
 )
 
 var (
@@ -38,8 +38,8 @@ var (
 
 // SeriesSegment represents a log of series entries.
 type SeriesSegment struct {
-	id   uint16
-	path string
+	id   uint16        // SegmentID
+	path string		   //
 
 	data []byte        // mmap file
 	file *os.File      // write file handle
@@ -55,7 +55,7 @@ func NewSeriesSegment(id uint16, path string) *SeriesSegment {
 	}
 }
 
-// CreateSeriesSegment generates an empty segment at path.
+// CreateSeriesSegment generates an empty segment file at path.
 func CreateSeriesSegment(id uint16, path string) (*SeriesSegment, error) {
 	// Generate segment in temp location.
 	f, err := os.Create(path + ".initializing")
@@ -113,9 +113,10 @@ func (s *SeriesSegment) Open() error {
 }
 
 // InitForWrite initializes a write handle for the segment.
-// This is only used for the last segment in the series file.
+// This is only used for the last segment in the series file (AOF policy).
 func (s *SeriesSegment) InitForWrite() (err error) {
-	// Only calculcate segment data size if writing.
+
+	//1. traverse all SeriesEntrys of s.data[] in order to get the current wirte offset.
 	for s.size = uint32(SeriesSegmentHeaderSize); s.size < uint32(len(s.data)); {
 		flag, _, _, sz := ReadSeriesEntry(s.data[s.size:])
 		if !IsValidSeriesEntryFlag(flag) {
@@ -124,12 +125,14 @@ func (s *SeriesSegment) InitForWrite() (err error) {
 		s.size += uint32(sz)
 	}
 
-	// Open file handler for writing & seek to end of data.
+	//2. open file handler for writing & seek to current wirte offset.
 	if s.file, err = os.OpenFile(s.path, os.O_WRONLY|os.O_CREATE, 0666); err != nil {
 		return err
 	} else if _, err := s.file.Seek(int64(s.size), io.SeekStart); err != nil {
 		return err
 	}
+
+	//3. wrap file handler with a buffer which has at least 32*1024 bytes.
 	s.w = bufio.NewWriterSize(s.file, 32*1024)
 
 	return nil
@@ -181,6 +184,7 @@ func (s *SeriesSegment) Size() int64 { return int64(s.size) }
 // Slice returns a byte slice starting at pos.
 func (s *SeriesSegment) Slice(pos uint32) []byte { return s.data[pos:] }
 
+
 // WriteLogEntry writes entry data into the segment.
 // Returns the offset of the beginning of the entry.
 func (s *SeriesSegment) WriteLogEntry(data []byte) (offset int64, err error) {
@@ -193,7 +197,6 @@ func (s *SeriesSegment) WriteLogEntry(data []byte) (offset int64, err error) {
 		return 0, err
 	}
 	s.size += uint32(len(data))
-
 	return offset, nil
 }
 
@@ -210,44 +213,59 @@ func (s *SeriesSegment) Flush() error {
 	return s.w.Flush()
 }
 
-// AppendSeriesIDs appends all the segments ids to a slice. Returns the new slice.
+// AppendSeriesIDs appends all the segments ids to a slice.
+// Returns the new slice.
 func (s *SeriesSegment) AppendSeriesIDs(a []SeriesID) []SeriesID {
-	s.ForEachEntry(func(flag uint8, id SeriesIDTyped, _ int64, _ []byte) error {
-		if flag == SeriesEntryInsertFlag {
-			a = append(a, id.SeriesID())
-		}
-		return nil
-	})
+	s.ForEachEntry(
+		func(flag uint8, id SeriesIDTyped, _ int64, _ []byte) error {
+			if flag == SeriesEntryInsertFlag {
+				a = append(a, id.SeriesID())
+			}
+			return nil
+		},
+	)
 	return a
 }
 
 // MaxSeriesID returns the highest series id in the segment.
 func (s *SeriesSegment) MaxSeriesID() SeriesID {
 	var max SeriesID
-	s.ForEachEntry(func(flag uint8, id SeriesIDTyped, _ int64, _ []byte) error {
-		untypedID := id.SeriesID()
-		if flag == SeriesEntryInsertFlag && untypedID.Greater(max) {
-			max = untypedID
-		}
-		return nil
-	})
+	s.ForEachEntry(
+		func(flag uint8, id SeriesIDTyped, _ int64, _ []byte) error {
+			untypedID := id.SeriesID()
+			if flag == SeriesEntryInsertFlag && untypedID.Greater(max) {
+				max = untypedID
+			}
+			return nil
+		},
+	)
 	return max
 }
 
 // ForEachEntry executes fn for every entry in the segment.
 func (s *SeriesSegment) ForEachEntry(fn func(flag uint8, id SeriesIDTyped, offset int64, key []byte) error) error {
+
 	for pos := uint32(SeriesSegmentHeaderSize); pos < uint32(len(s.data)); {
+
+		// read entry
 		flag, id, key, sz := ReadSeriesEntry(s.data[pos:])
+
+		// check if flag is valid.
 		if !IsValidSeriesEntryFlag(flag) {
 			break
 		}
 
+		// offset is a interger with higher 2-byte segmentID and lower 4-byte pos.
 		offset := JoinSeriesOffset(s.id, pos)
+
+
 		if err := fn(flag, id, offset, key); err != nil {
 			return err
 		}
+
 		pos += uint32(sz)
 	}
+
 	return nil
 }
 
@@ -282,17 +300,22 @@ func FindSegment(a []*SeriesSegment, id uint16) *SeriesSegment {
 
 // ReadSeriesKeyFromSegments returns a series key from an offset within a set of segments.
 func ReadSeriesKeyFromSegments(a []*SeriesSegment, offset int64) []byte {
+	//1. 从 offset 中分离出 segmentID 和 pos
 	segmentID, pos := SplitSeriesOffset(offset)
+	//2. 根据 segmentID 定位到 segment
 	segment := FindSegment(a, segmentID)
 	if segment == nil {
 		return nil
 	}
+	//3. 根据 pos 定位到数据 buf
 	buf := segment.Slice(pos)
+	//4. 从 buf 处读取一个 SeriesKey 并返回
 	key, _ := ReadSeriesKey(buf)
 	return key
 }
 
 // JoinSeriesOffset returns an offset that combines the 2-byte segmentID and 4-byte pos.
+// 通过segment id可以知道写入了哪个segment文件，通过segment size可知道写了segment文件的什么位置。
 func JoinSeriesOffset(segmentID uint16, pos uint32) int64 {
 	return (int64(segmentID) << 32) | int64(pos)
 }
@@ -366,6 +389,8 @@ func (hdr *SeriesSegmentHeader) WriteTo(w io.Writer) (n int64, err error) {
 	return buf.WriteTo(w)
 }
 
+
+// Read&Parse SeriesEntry
 func ReadSeriesEntry(data []byte) (flag uint8, id SeriesIDTyped, key []byte, sz int64) {
 	// If flag byte is zero then no more entries exist.
 	flag, data = uint8(data[0]), data[1:]
@@ -373,24 +398,29 @@ func ReadSeriesEntry(data []byte) (flag uint8, id SeriesIDTyped, key []byte, sz 
 		return 0, SeriesIDTyped{}, nil, 1
 	}
 
+	// Read SeriesID(8B) and reminder data[8:]
 	id, data = NewSeriesIDTyped(binary.BigEndian.Uint64(data)), data[8:]
 	switch flag {
 	case SeriesEntryInsertFlag:
 		key, _ = ReadSeriesKey(data)
 	}
+
+	// SeriesEntry(Flag(1B), SeriesID(8B), SeriesKey(varint), Size=1+8+len(key) )
 	return flag, id, key, int64(SeriesEntryHeaderSize + len(key))
 }
+
+
 
 func AppendSeriesEntry(dst []byte, flag uint8, id SeriesIDTyped, key []byte) []byte {
 	buf := make([]byte, 8)
 	binary.BigEndian.PutUint64(buf, id.RawID())
 
-	dst = append(dst, flag)
-	dst = append(dst, buf...)
+	dst = append(dst, flag)      //1. flag 1B
+	dst = append(dst, buf...)    //2. SeriesID 8B
 
 	switch flag {
 	case SeriesEntryInsertFlag:
-		dst = append(dst, key...)
+		dst = append(dst, key...)    //3. SeriesKey
 	case SeriesEntryTombstoneFlag:
 	default:
 		panic(fmt.Sprintf("unreachable: invalid flag: %d", flag))

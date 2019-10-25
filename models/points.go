@@ -31,21 +31,40 @@ var (
 	MeasurementTagKeyBytes = []byte(MeasurementTagKey)
 )
 
+
+// 转义字符
 type escapeSet struct {
-	k   [1]byte
-	esc [2]byte
+	k   [1]byte  // character
+	esc [2]byte  // escape character
 }
 
 var (
+
 	measurementEscapeCodes = [...]escapeSet{
-		{k: [1]byte{','}, esc: [2]byte{'\\', ','}},
-		{k: [1]byte{' '}, esc: [2]byte{'\\', ' '}},
+		{
+			k: [1]byte{','},
+			esc: [2]byte{'\\', ','},
+		},
+		{
+			k: [1]byte{' '},
+			esc: [2]byte{'\\', ' '},
+		},
 	}
 
+
 	tagEscapeCodes = [...]escapeSet{
-		{k: [1]byte{','}, esc: [2]byte{'\\', ','}},
-		{k: [1]byte{' '}, esc: [2]byte{'\\', ' '}},
-		{k: [1]byte{'='}, esc: [2]byte{'\\', '='}},
+		{
+			k: [1]byte{','},
+			esc: [2]byte{'\\', ','},
+		},
+		{
+			k: [1]byte{' '},
+			esc: [2]byte{'\\', ' '},
+		},
+		{
+			k: [1]byte{'='},
+			esc: [2]byte{'\\', '='},
+		},
 	}
 
 	// ErrPointMustHaveAField is returned when operating on a point that does not have any fields.
@@ -75,6 +94,7 @@ func EnableUintSupport() {
 
 // Point defines the values that will be written to the database.
 type Point interface {
+
 	// Name return the measurement name for the point.
 	Name() []byte
 
@@ -143,14 +163,21 @@ type Point interface {
 	// StringSize returns the length of the string that would be returned by String().
 	StringSize() int
 
-	// AppendString appends the result of String() to the provided buffer and returns
-	// the result, potentially reducing string allocations.
+	// AppendString appends the result of String() to the provided buffer and returns the result,
+	// potentially reducing string allocations.
 	AppendString(buf []byte) []byte
 
-	// FieldIterator retuns a FieldIterator that can be used to traverse the
-	// fields of a point without constructing the in-memory map.
+
+
+	// FieldIterator retuns a FieldIterator that can be used to traverse the fields of a point
+	// without constructing the in-memory map.
 	FieldIterator() FieldIterator
 }
+
+
+
+
+
 
 // FieldType represents the type of a field.
 type FieldType int
@@ -192,9 +219,15 @@ func (t FieldType) String() string {
 	}
 }
 
+
+
 // FieldIterator provides a low-allocation interface to iterate through a point's fields.
+// FieldIterator 提供了一个 "低内存开销" 的接口来遍历 point 的字段。
 type FieldIterator interface {
+
+
 	// Next indicates whether there any fields remaining.
+	// Next 表示是否还有其余字段
 	Next() bool
 
 	// FieldKey returns the key of the current field.
@@ -222,6 +255,9 @@ type FieldIterator interface {
 	Reset()
 }
 
+
+
+
 // Points represents a sortable list of points by timestamp.
 type Points []Point
 
@@ -234,13 +270,25 @@ func (a Points) Less(i, j int) bool { return a[i].Time().Before(a[j].Time()) }
 // Swap implements sort.Interface.
 func (a Points) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
 
+
+
+
+
 // point is the default implementation of Point.
+//
+// measurement: 表名
+// tags: 属性标签
+// timestamp: 时间戳
 type point struct {
+
+	// 时间戳
 	time time.Time
 
-	// text encoding of measurement and tags
-	// key must always be stored sorted by tags, if the original line was not sorted,
-	// we need to resort it
+	// text encoding of measurement and tags key must always be stored sorted by tags,
+	// if the original line was not sorted, we need to resort it.
+	//
+	// 表名 measurement 和 tags 组合起来一起作为 Point 的 key,
+	// key 的文本编码必须始终按 tags 排序存储，如果原 tags 没有排序，我们需要重新排序后再编码。
 	key []byte
 
 	// text encoding of field data
@@ -248,6 +296,9 @@ type point struct {
 
 	// text encoding of timestamp
 	ts []byte
+
+
+
 
 	// cached version of parsed fields from data
 	cachedFields map[string]interface{}
@@ -258,14 +309,19 @@ type point struct {
 	// cached version of parsed tags
 	cachedTags Tags
 
+
+
+
 	it fieldIterator
 }
 
+
 // type assertions
 var (
-	_ Point         = (*point)(nil)
-	_ FieldIterator = (*point)(nil)
+	_ Point         = (*point)(nil)   // assert 结构体 point 实现了 Point 接口
+	_ FieldIterator = (*point)(nil)   // assert 结构体 point 实现了 FieldIterator 接口
 )
+
 
 const (
 	// the number of characters for the largest possible int64 (9223372036854775807)
@@ -331,9 +387,11 @@ func ParseTags(buf []byte) Tags {
 	return parseTags(buf, nil)
 }
 
+
+
 func ParseName(buf []byte) []byte {
-	// Ignore the error because scanMeasurement returns "missing fields" which we ignore
-	// when just parsing a key
+	// Ignore the error because scanMeasurement returns "missing fields" which
+	// we ignore when just parsing a key
 	state, i, _ := scanMeasurement(buf, 0)
 	var name []byte
 	if state == tagKeyState {
@@ -344,6 +402,7 @@ func ParseName(buf []byte) []byte {
 
 	return UnescapeMeasurement(name)
 }
+
 
 // ValidPrecision checks if the precision is known.
 func ValidPrecision(precision string) bool {
@@ -488,6 +547,7 @@ func parsePoint(buf []byte, defaultTime time.Time, precision string) (Point, err
 	return pt, nil
 }
 
+
 // GetPrecisionMultiplier will return a multiplier for the precision specified.
 func GetPrecisionMultiplier(precision string) int64 {
 	d := time.Nanosecond
@@ -501,6 +561,8 @@ func GetPrecisionMultiplier(precision string) int64 {
 	}
 	return int64(d)
 }
+
+
 
 // scanKey scans buf starting at i for the measurement and tag portion of the point.
 // It returns the ending position and the byte slice of key within buf.  If there
@@ -1964,8 +2026,13 @@ func (t *Tag) String() string {
 	return buf.String()
 }
 
+
+
+
+
 // Tags represents a sorted list of tags.
 type Tags []Tag
+
 
 // NewTags returns a new Tags from a map.
 func NewTags(m map[string]string) Tags {
@@ -1979,6 +2046,7 @@ func NewTags(m map[string]string) Tags {
 	sort.Sort(a)
 	return a
 }
+
 
 // Keys returns the list of keys for a tag set.
 func (a Tags) Keys() []string {
@@ -2018,9 +2086,9 @@ func (a Tags) String() string {
 	return buf.String()
 }
 
-// Size returns the number of bytes needed to store all tags. Note, this is
-// the number of bytes needed to store all keys and values and does not account
-// for data structures or delimiters for example.
+// Size returns the number of bytes needed to store all tags.
+// Note, this is the number of bytes needed to store all keys and values and
+// does not account for data structures or delimiters for example.
 func (a Tags) Size() int {
 	var total int
 	for i := range a {
@@ -2055,6 +2123,7 @@ func (a Tags) Equal(other Tags) bool {
 	if len(a) != len(other) {
 		return false
 	}
+
 	for i := range a {
 		if !bytes.Equal(a[i].Key, other[i].Key) || !bytes.Equal(a[i].Value, other[i].Value) {
 			return false
@@ -2266,12 +2335,19 @@ func DeepCopyTags(a Tags) Tags {
 // values.
 type Fields map[string]interface{}
 
+
+
+
 // FieldIterator retuns a FieldIterator that can be used to traverse the
 // fields of a point without constructing the in-memory map.
 func (p *point) FieldIterator() FieldIterator {
 	p.Reset()
 	return p
 }
+
+
+
+
 
 type fieldIterator struct {
 	start, end  int
@@ -2308,6 +2384,7 @@ func (p *point) Next() bool {
 		return true
 	}
 
+	//
 	if strings.IndexByte(`0123456789-.nNiIu`, c) >= 0 {
 		if p.it.valueBuf[len(p.it.valueBuf)-1] == 'i' {
 			p.it.fieldType = Integer
@@ -2386,15 +2463,21 @@ func (p *point) Reset() {
 	p.it.end = 0
 }
 
-// MarshalBinary encodes all the fields to their proper type and returns the binary
-// represenation
-// NOTE: uint64 is specifically not supported due to potential overflow when we decode
-// again later to an int64
+
+
+// MarshalBinary encodes all the fields to their proper type and returns the binary represenation.
+// MarshalBinary 将所有 fields 按其正确的类型进行编码并拼接返回。
+//
+// eg. p.Fields => []byte("key1=value1,key2=value2,...,keyN=valueN")
+//
+
+// NOTE: uint64 is specifically not supported due to potential overflow when we decode again later to an int64
 // NOTE2: uint is accepted, and may be 64 bits, and is for some reason accepted...
 func (p Fields) MarshalBinary() []byte {
 	var b []byte
 	keys := make([]string, 0, len(p))
 
+	// range key of Fields -- map[string]interface{}
 	for k := range p {
 		keys = append(keys, k)
 	}
@@ -2402,6 +2485,7 @@ func (p Fields) MarshalBinary() []byte {
 	// Not really necessary, can probably be removed.
 	sort.Strings(keys)
 
+	// build "key1=value1,key2=value2,...,keyN=valueN"
 	for i, k := range keys {
 		if i > 0 {
 			b = append(b, ',')
@@ -2409,27 +2493,38 @@ func (p Fields) MarshalBinary() []byte {
 		b = appendField(b, k, p[k])
 	}
 
+
 	return b
 }
 
+
+
+// return []byte("key=value")
 func appendField(b []byte, k string, v interface{}) []byte {
+
+	//1. append(key)
 	b = append(b, []byte(escape.String(k))...)
+
+	//2. append(=)
 	b = append(b, '=')
 
-	// check popular types first
-	switch v := v.(type) {
+	//3. append(value)
+	switch v := v.(type) { 	// check popular types first
 	case float64:
 		b = strconv.AppendFloat(b, v, 'f', -1, 64)
 	case int64:
 		b = strconv.AppendInt(b, v, 10)
 		b = append(b, 'i')
 	case string:
+		// "string_value"
 		b = append(b, '"')
 		b = append(b, []byte(EscapeStringField(v))...)
 		b = append(b, '"')
 	case bool:
+		// "true" or "false"
 		b = strconv.AppendBool(b, v)
 	case int32:
+		// "12345i"
 		b = strconv.AppendInt(b, int64(v), 10)
 		b = append(b, 'i')
 	case int16:
@@ -2442,6 +2537,7 @@ func appendField(b []byte, k string, v interface{}) []byte {
 		b = strconv.AppendInt(b, int64(v), 10)
 		b = append(b, 'i')
 	case uint64:
+		// "12345u"
 		b = strconv.AppendUint(b, v, 10)
 		b = append(b, 'u')
 	case uint32:
@@ -2469,34 +2565,44 @@ func appendField(b []byte, k string, v interface{}) []byte {
 		b = append(b, '"')
 		b = append(b, []byte(EscapeStringField(fmt.Sprintf("%v", v)))...)
 		b = append(b, '"')
-
 	}
 
 	return b
 }
 
-// ValidToken returns true if the provided token is a valid unicode string, and
-// only contains printable, non-replacement characters.
+
+
+
+// ValidToken returns true if the provided token is a valid unicode string, and only contains printable, non-replacement characters.
 func ValidToken(a []byte) bool {
+
+	//1. 是否 utf-8 ?
 	if !utf8.Valid(a) {
 		return false
 	}
 
+	//2. 是否包含不可打印字符、可被替换字符
 	for _, r := range string(a) {
 		if !unicode.IsPrint(r) || r == unicode.ReplacementChar {
 			return false
 		}
 	}
+
+	//3. 既是 utf-8 且不含不可打印字符和非法字符，则返回 true
 	return true
 }
 
-// ValidTagTokens returns true if all the provided tag key and values are
-// valid.
+
+
+
+// ValidTagTokens returns true if all the provided tag key and values are valid.
 //
-// ValidTagTokens does not validate the special tag keys used to represent the
-// measurement name and field key, but it does validate the associated values.
+// ValidTagTokens does not validate the special tag keys used to represent the measurement name and field key,
+// but it does validate the associated values.
 func ValidTagTokens(tags Tags) bool {
+
 	for _, tag := range tags {
+
 		// Validate all external tag keys.
 		if !bytes.Equal(tag.Key, MeasurementTagKeyBytes) && !bytes.Equal(tag.Key, FieldKeyTagKeyBytes) && !ValidToken(tag.Key) {
 			return false

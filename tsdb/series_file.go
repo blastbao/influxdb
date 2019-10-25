@@ -23,6 +23,47 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+
+
+// SeriesFile 定义:
+// 	管理当前db下所有的 SeriesePartition，提供了操作 Series 的公共接口，对外屏蔽了 SeriesPartition 和 SeriesSegment 的存在;
+
+// SeriesID 产生规则:
+
+
+
+
+
+// Influxdb将paritition数量定死了为 8，就是说所有的serieskey放在这8个桶里，如何确定放在哪个桶里呢？
+//
+//
+//
+//
+// 就是上面提到的计算 SeriesKey 的 hash 值然后取模 parition 个数（xxhash.Sum64(key) % SeriesFilePartitionN），
+
+// 所有的这些 partitionID 是从 0 到 7，每个 partiton 都有一个顺列号 seq，初始值为 partitionID + 1，
+
+// 这个顺列号就是放入这个 parition 中的 seriese key 对应的 id，每次增加 8，比如对于1号 partition，第一个放入的 series id 就是2，
+
+// 第二个就是10 有了上面的规则，从 seriese id 上就很容易得到它属于哪个 partition:int((id - 1) % SeriesFilePartitionN)
+// 将一系列的SeriesKey写入相应的Partiton, 写入哪个partition是计算SeriesKey的hash值然后取模parition个数 int(xxhash.Sum64(key) % SeriesFilePartitionN)
+
+
+
+
+
+
+// SeriesFile 其实叫SeriesKeyFile比较合适，里面存储了当前DB下的所有series key;
+// 其中的 seriesKey = (measurement + tag set)
+
+
+
+
+
+
+
+
+
 var (
 	ErrSeriesFileClosed         = errors.New("tsdb: series file closed")
 	ErrInvalidSeriesPartitionID = errors.New("tsdb: invalid series partition id")
@@ -41,8 +82,8 @@ type SeriesFile struct {
 	path       string
 	partitions []*SeriesPartition
 
-	// N.B we have many partitions, but they must share the same metrics, so the
-	// metrics are managed in a single shared package variable and
+	// N.B we have many partitions, but they must share the same metrics,
+	// so the metrics are managed in a single shared package variable and
 	// each partition decorates the same metric measurements with different
 	// partition id label values.
 	defaultMetricLabels prometheus.Labels
@@ -60,7 +101,8 @@ func NewSeriesFile(path string) *SeriesFile {
 	}
 }
 
-// WithLogger sets the logger on the SeriesFile and all underlying partitions. It must be called before Open.
+// WithLogger sets the logger on the SeriesFile and all underlying partitions.
+// It must be called before Open.
 func (f *SeriesFile) WithLogger(log *zap.Logger) {
 	f.Logger = log.With(zap.String("service", "series-file"))
 }
@@ -89,18 +131,19 @@ func (f *SeriesFile) Open(ctx context.Context) error {
 		return errors.New("series file already opened")
 	}
 
+	//1. tracing log
 	span, _ := tracing.StartSpanFromContext(ctx)
 	defer span.Finish()
 
 	_, logEnd := logger.NewOperation(f.Logger, "Opening Series File", "series_file_open", zap.String("path", f.path))
 	defer logEnd()
 
-	// Create path if it doesn't exist.
+	//2. Create path if it doesn't exist.
 	if err := os.MkdirAll(filepath.Join(f.path), 0777); err != nil {
 		return err
 	}
 
-	// Initialise metrics for trackers.
+	//3. Initialise metrics for trackers.
 	mmu.Lock()
 	if sms == nil && f.metricsEnabled {
 		sms = newSeriesFileMetrics(f.defaultMetricLabels)
@@ -116,16 +159,18 @@ func (f *SeriesFile) Open(ctx context.Context) error {
 	}
 	mmu.Unlock()
 
-	// Open partitions.
+	//4. Open partitions.
 	f.partitions = make([]*SeriesPartition, 0, SeriesFilePartitionN)
+
 	for i := 0; i < SeriesFilePartitionN; i++ {
+
 		// TODO(edd): These partition initialisation should be moved up to NewSeriesFile.
 		p := NewSeriesPartition(i, f.SeriesPartitionPath(i))
 		p.Logger = f.Logger.With(zap.Int("partition", p.ID()))
 
 		// For each series file index, rhh trackers are used to track the RHH Hashmap.
-		// Each of the trackers needs to be given slightly different default
-		// labels to ensure the correct partition_ids are set as labels.
+		// Each of the trackers needs to be given slightly different default labels to
+		// ensure the correct partition_ids are set as labels.
 		labels := make(prometheus.Labels, len(f.defaultMetricLabels))
 		for k, v := range f.defaultMetricLabels {
 			labels[k] = v
@@ -201,15 +246,25 @@ func (f *SeriesFile) DisableCompactions() {
 	}
 }
 
-// CreateSeriesListIfNotExists creates a list of series in bulk if they don't exist. It overwrites
-// the collection's Keys and SeriesIDs fields. The collection's SeriesIDs slice will have IDs for
-// every name+tags, creating new series IDs as needed. If any SeriesID is zero, then a type
-// conflict has occured for that series.
+
+
+
+
+// CreateSeriesListIfNotExists creates a list of series in bulk if they don't exist.
+// It overwrites the collection's Keys and SeriesIDs fields.
+//
+// The collection's SeriesIDs slice will have IDs for every name+tags, creating new series IDs as needed.
+//
+// If any SeriesID is zero, then a type conflict has occured for that series.
+
 func (f *SeriesFile) CreateSeriesListIfNotExists(collection *SeriesCollection) error {
+	//根据 names、tags 生成 SeriesKeys
 	collection.SeriesKeys = GenerateSeriesKeys(collection.Names, collection.Tags)
 	collection.SeriesIDs = make([]SeriesID, len(collection.SeriesKeys))
+	// 将 SeriesKeys 通过哈希算法+取模的方式，获取其对应的 PartitionIDs。
 	keyPartitionIDs := f.SeriesKeysPartitionIDs(collection.SeriesKeys)
 
+	//使用goroutine并行写入
 	var g errgroup.Group
 	for i := range f.partitions {
 		p := f.partitions[i]
@@ -217,10 +272,11 @@ func (f *SeriesFile) CreateSeriesListIfNotExists(collection *SeriesCollection) e
 			return p.CreateSeriesListIfNotExists(collection, keyPartitionIDs)
 		})
 	}
+
+
 	if err := g.Wait(); err != nil {
 		return err
 	}
-
 	collection.ApplyConcurrentDrops()
 	return nil
 }
@@ -322,6 +378,7 @@ func (f *SeriesFile) SeriesCount() uint64 {
 	return n
 }
 
+
 // SeriesIterator returns an iterator over all the series.
 func (f *SeriesFile) SeriesIDIterator() SeriesIDIterator {
 	var ids []SeriesID
@@ -331,6 +388,8 @@ func (f *SeriesFile) SeriesIDIterator() SeriesIDIterator {
 	sort.Slice(ids, func(i, j int) bool { return ids[i].Less(ids[j]) })
 	return NewSeriesIDSliceIterator(ids)
 }
+
+
 
 func (f *SeriesFile) SeriesIDPartitionID(id SeriesID) int {
 	return int((id.RawID() - 1) % SeriesFilePartitionN)
@@ -347,11 +406,12 @@ func (f *SeriesFile) SeriesIDPartition(id SeriesID) *SeriesPartition {
 func (f *SeriesFile) SeriesKeysPartitionIDs(keys [][]byte) []int {
 	partitionIDs := make([]int, len(keys))
 	for i := range keys {
-		partitionIDs[i] = f.SeriesKeyPartitionID(keys[i])
+		partitionIDs[i] = f.SeriesKeyPartitionID(keys[i]) //Hash
 	}
 	return partitionIDs
 }
 
+// SeriesKey ----HASH----> PartitionID
 func (f *SeriesFile) SeriesKeyPartitionID(key []byte) int {
 	return int(xxhash.Sum64(key) % SeriesFilePartitionN)
 }
@@ -366,54 +426,68 @@ func (f *SeriesFile) SeriesKeyPartition(key []byte) *SeriesPartition {
 
 // AppendSeriesKey serializes name and tags to a byte slice.
 // The total length is prepended as a uvarint.
+
 func AppendSeriesKey(dst []byte, name []byte, tags models.Tags) []byte {
+
+	// 临时 buff 数组
 	buf := make([]byte, binary.MaxVarintLen64)
+
+	// 如果调用者传递了有效的 dst，则记录一下其当前的长度 origLen，后续的写入都是 append 追加，最终 len(dst)-origLen 即为写入数据总长度。
 	origLen := len(dst)
 
-	// The tag count is variable encoded, so we need to know ahead of time what
-	// the size of the tag count value will be.
+	// The tag count is variable encoded, so we need to know ahead of time what the size of the tag count value will be.
 	tcBuf := make([]byte, binary.MaxVarintLen64)
 	tcSz := binary.PutUvarint(tcBuf, uint64(len(tags)))
 
-	// Size of name/tags. Does not include total length.
-	size := 0 + //
-		2 + // size of measurement
-		len(name) + // measurement
-		tcSz + // size of number of tags
-		(4 * len(tags)) + // length of each tag key and value
-		tags.Size() // size of tag keys/values
+	// Size of name/tags. Size does not include total length.
+	size := 0 +
+			2 + 				// size of measurement name
+			len(name) + 		// measurement name
+			tcSz + 				// size of number of tags
+			(4 * len(tags)) + 	// length of each tag key and value
+			tags.Size()  		// size of tag keys/values
 
-	// Variable encode length.
-	totalSz := binary.PutUvarint(buf, uint64(size))
+
+	//(重要) name 和 tags 序列化后占用的空间大小为size，这个值以变长整数方式编码后占 totalSz 个字节，因此整个 SeriesKey 数据的长度是 Size + totalSz.
+
+	// Total Length.
+	totalSz := binary.PutUvarint(buf, uint64(size)) // Variable encode length.
 
 	// If caller doesn't provide a buffer then pre-allocate an exact one.
 	if dst == nil {
 		dst = make([]byte, 0, size+totalSz)
 	}
 
-	// Append total length.
+	// SeriesKey Data Append ...
+
+	//1. Append total length.
 	dst = append(dst, buf[:totalSz]...)
 
-	// Append name.
+	//2. Append measurement.
 	binary.BigEndian.PutUint16(buf, uint16(len(name)))
+	// 	2.1 length of measurement, 2B
 	dst = append(dst, buf[:2]...)
+	//	2.2 measurement, len(name) B
 	dst = append(dst, name...)
 
-	// Append tag count.
+	//3. Append tag count. tcSz B.
 	dst = append(dst, tcBuf[:tcSz]...)
 
-	// Append tags.
+	//4. Append tags.
 	for _, tag := range tags {
+		//4.1 length of tag.Key, 2B
 		binary.BigEndian.PutUint16(buf, uint16(len(tag.Key)))
 		dst = append(dst, buf[:2]...)
+		//4.2 tag.Key
 		dst = append(dst, tag.Key...)
-
+		//4.3 length of tag.Value, 2B
 		binary.BigEndian.PutUint16(buf, uint16(len(tag.Value)))
 		dst = append(dst, buf[:2]...)
+		//4.4 tag.Value
 		dst = append(dst, tag.Value...)
 	}
 
-	// Verify that the total length equals the encoded byte count.
+	//5. Verify that the total length equals the encoded byte count.
 	if got, exp := len(dst)-origLen, size+totalSz; got != exp {
 		panic(fmt.Sprintf("series key encoding does not match calculated total length: actual=%d, exp=%d, key=%x", got, exp, dst))
 	}
@@ -423,15 +497,25 @@ func AppendSeriesKey(dst []byte, name []byte, tags models.Tags) []byte {
 
 // ReadSeriesKey returns the series key from the beginning of the buffer.
 func ReadSeriesKey(data []byte) (key, remainder []byte) {
+	// data = SeriesKeyDataLength + SeriesKeyData + Remainder, and SeriesKeyBytesSize is encoded in variable length bytes.
+	// so:
+	// 	 sizeof(SeriesKeyDataLength) == n
+	// 	 sizeof(SeriesKeyData) == sz
+	//
+	// SeriesKey = SeriesKeyDataLength + SeriesKeyData.
+	// so:
+	// 	 sizeof(SeriesKey) = sz + n
 	sz, n := binary.Uvarint(data)
 	return data[:int(sz)+n], data[int(sz)+n:]
 }
 
+// 变长字节编码，读取 SeriesKeyLen
 func ReadSeriesKeyLen(data []byte) (sz int, remainder []byte) {
 	sz64, i := binary.Uvarint(data)
 	return int(sz64), data[i:]
 }
 
+// 变长字节编码，读取 SeriesKeyMeasurement
 func ReadSeriesKeyMeasurement(data []byte) (name, remainder []byte) {
 	n, data := binary.BigEndian.Uint16(data), data[2:]
 	return data[:n], data[n:]
@@ -442,12 +526,21 @@ func ReadSeriesKeyTagN(data []byte) (n int, remainder []byte) {
 	return int(n64), data[i:]
 }
 
+
+// len(key) + key + len(value) + value + reminder bytes
 func ReadSeriesKeyTag(data []byte) (key, value, remainder []byte) {
+
+	// len(key) 2B, data
 	n, data := binary.BigEndian.Uint16(data), data[2:]
+
+	// key, data
 	key, data = data[:n], data[n:]
 
+	// len(value), data
 	n, data = binary.BigEndian.Uint16(data), data[2:]
+	// value, data
 	value, data = data[:n], data[n:]
+
 	return key, value, data
 }
 
@@ -465,24 +558,34 @@ func ParseSeriesKeyInto(data []byte, dstTags models.Tags) ([]byte, models.Tags) 
 }
 
 // parseSeriesKey extracts the name and tags from data, attempting to re-use the
-// provided tags value rather than allocating. The returned tags may have a
-// different length and capacity to those provided.
+// provided tags value rather than allocating.
+// The returned tags may have a different length and capacity to those provided.
 func parseSeriesKey(data []byte, dst models.Tags) ([]byte, models.Tags) {
 	var name []byte
+
+	//读取 SeriesKey 总长度 totalSz 和 data
 	_, data = ReadSeriesKeyLen(data)
+
+	//读取 Measurement 和 reminder data
 	name, data = ReadSeriesKeyMeasurement(data)
+	//读取 tags 数目和 reminder data
 	tagN, data := ReadSeriesKeyTagN(data)
 
+	//检查 dst 是否足以容纳 tagN 个 tags，不足的话通过 append() 扩容，否则直接截取切片
 	dst = dst[:cap(dst)] // Grow dst to use full capacity
 	if got, want := len(dst), tagN; got < want {
 		dst = append(dst, make(models.Tags, want-got)...)
 	} else if got > want {
 		dst = dst[:want]
 	}
-	dst = dst[:tagN]
+	dst = dst[:tagN] //？设置固定数目？
 
+
+	//循环读取 TagKey 和 TagValue 存入 dst[] 数组中
 	for i := 0; i < tagN; i++ {
 		var key, value []byte
+		// SeriesKeyTag存储格式: len(key) + key + len(value) + value + reminder bytes，
+		// 按格式逐个解析出 TagKey 和 TagValue。
 		key, value, data = ReadSeriesKeyTag(data)
 		dst[i].Key, dst[i].Value = key, value
 	}
@@ -491,6 +594,7 @@ func parseSeriesKey(data []byte, dst models.Tags) ([]byte, models.Tags) {
 }
 
 func CompareSeriesKeys(a, b []byte) int {
+
 	// Handle 'nil' keys.
 	if len(a) == 0 && len(b) == 0 {
 		return 0
@@ -542,11 +646,18 @@ func CompareSeriesKeys(a, b []byte) int {
 	}
 }
 
-// GenerateSeriesKeys generates series keys for a list of names & tags using
-// a single large memory block.
+
+
+
+
+
+// GenerateSeriesKeys generates series keys for a list of names & tags
+// using a single large memory block.
 func GenerateSeriesKeys(names [][]byte, tagsSlice []models.Tags) [][]byte {
+
 	buf := make([]byte, 0, SeriesKeysSize(names, tagsSlice))
 	keys := make([][]byte, len(names))
+
 	for i := range names {
 		offset := len(buf)
 		buf = AppendSeriesKey(buf, names[i], tagsSlice[i])

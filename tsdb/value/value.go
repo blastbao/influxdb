@@ -44,25 +44,54 @@ func NewValue(t int64, value interface{}) Value {
 }
 
 // NewRawIntegerValue returns a new integer value.
-func NewRawIntegerValue(t int64, v int64) IntegerValue { return IntegerValue{unixnano: t, value: v} }
+func NewRawIntegerValue(t int64, v int64) IntegerValue {
+	return IntegerValue{
+		unixnano: t,
+		value: v,
+	}
+}
 
 // NewRawUnsignedValue returns a new unsigned integer value.
-func NewRawUnsignedValue(t int64, v uint64) UnsignedValue { return UnsignedValue{unixnano: t, value: v} }
+func NewRawUnsignedValue(t int64, v uint64) UnsignedValue {
+	return UnsignedValue{
+		unixnano: t,
+		value: v,
+	}
+}
 
 // NewRawFloatValue returns a new float value.
-func NewRawFloatValue(t int64, v float64) FloatValue { return FloatValue{unixnano: t, value: v} }
+func NewRawFloatValue(t int64, v float64) FloatValue {
+	return FloatValue{
+		unixnano: t,
+		value: v,
+	}
+}
 
 // NewRawBooleanValue returns a new boolean value.
-func NewRawBooleanValue(t int64, v bool) BooleanValue { return BooleanValue{unixnano: t, value: v} }
+func NewRawBooleanValue(t int64, v bool) BooleanValue {
+	return BooleanValue{
+		unixnano: t,
+		value: v,
+	}
+}
 
 // NewRawStringValue returns a new string value.
-func NewRawStringValue(t int64, v string) StringValue { return StringValue{unixnano: t, value: v} }
+func NewRawStringValue(t int64, v string) StringValue {
+	return StringValue{
+		unixnano: t,
+		value: v,
+	}
+}
 
 // NewIntegerValue returns a new integer value.
-func NewIntegerValue(t int64, v int64) Value { return NewRawIntegerValue(t, v) }
+func NewIntegerValue(t int64, v int64) Value {
+	return NewRawIntegerValue(t, v)
+}
 
 // NewUnsignedValue returns a new unsigned integer value.
-func NewUnsignedValue(t int64, v uint64) Value { return NewRawUnsignedValue(t, v) }
+func NewUnsignedValue(t int64, v uint64) Value {
+	return NewRawUnsignedValue(t, v)
+}
 
 // NewFloatValue returns a new float value.
 func NewFloatValue(t int64, v float64) Value { return NewRawFloatValue(t, v) }
